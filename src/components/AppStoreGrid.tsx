@@ -67,7 +67,7 @@ export default function AppStoreGrid() {
 
   return (
     <section className="pt-6 pb-12 md:pt-8 md:pb-24 bg-white relative z-10" id="store">
-      <div className="w-full max-w-6xl mx-auto md:px-6">
+      <div className="w-full max-w-6xl mx-auto px-4 md:px-6">
         
 
 
@@ -89,7 +89,7 @@ export default function AppStoreGrid() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                   key={app.id}
-                  className="group bg-white rounded-none md:rounded-3xl overflow-hidden flex flex-col shadow-sm border-b md:border border-slate-200 transition-all hover:shadow-lg w-full"
+                  className="group bg-white rounded-3xl overflow-hidden flex flex-col shadow-sm border border-slate-200 transition-all hover:shadow-lg w-full"
                 >
                   {/* Top Cover - YouTube Video */}
                   <div className="w-full relative pt-[56.25%] bg-black">
@@ -128,7 +128,7 @@ export default function AppStoreGrid() {
                       href="/development"
                       className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors shrink-0 ml-2"
                     >
-                      <Download className="w-5 h-5 text-slate-700" />
+                      <Download className="w-5 h-5 text-slate-700" strokeWidth={2.5} />
                     </a>
                   </div>
                 </motion.div>
