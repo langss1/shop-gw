@@ -115,8 +115,8 @@ export default function MobileHeader() {
               />
             </div>
             <div className="w-[1px] h-4 bg-slate-300"></div>
-            <button className="p-1 hover:bg-slate-200/50 rounded-full transition-colors">
-              <Search className="w-4 h-4 text-slate-800" />
+            <button className="p-1.5 hover:bg-slate-200/50 rounded-full transition-colors">
+              <Search className="w-5 h-5 text-slate-800" />
             </button>
           </motion.div>
         )}
