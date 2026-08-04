@@ -9,13 +9,6 @@ export default function Footer() {
         <img src="/logo.jpeg" alt="Logo" className="h-9 w-9 rounded-full object-cover border border-slate-200 shadow-sm" />
       </div>
 
-      {/* Links */}
-      <div className="flex items-center gap-3 mb-6 text-sm font-semibold text-slate-700">
-        <a href="#" className="hover:text-blue-600 transition-colors">Terms and Conditions</a>
-        <span className="text-slate-300">|</span>
-        <a href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
-      </div>
-
       {/* Text Info */}
       <div className="space-y-4 mb-8 text-slate-500">
         <p>
@@ -26,9 +19,11 @@ export default function Footer() {
         </p>
       </div>
 
-      {/* Copyright */}
-      <div className="w-full text-center mt-auto font-bold text-slate-700 text-xs md:text-sm pt-4">
-        Gilangwasis Co., Ltd.
+      {/* Links */}
+      <div className="flex items-center gap-3 mt-auto text-sm font-semibold text-slate-700">
+        <a href="#" className="hover:text-blue-600 transition-colors">Terms and Conditions</a>
+        <span className="text-slate-300">|</span>
+        <a href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
       </div>
     </footer>
   );
