@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, animate } from "framer-motion";
-import { X, ExternalLink, GitBranch as Github, ChevronRight, LayoutGrid, Cpu, Shield, Code } from "lucide-react";
+import { X, ExternalLink, GitBranch as Github, ChevronRight, LayoutGrid, Cpu, Shield, Code, Download } from "lucide-react";
 
 // Dummy Apps Database
 const APPS = [
@@ -119,42 +119,47 @@ export default function AppStoreGrid() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                   key={app.id}
-                  onClick={() => setSelectedApp(app)}
-                  className="group cursor-pointer bg-white rounded-3xl overflow-hidden flex flex-col glass-card"
+                  className="group bg-slate-900 rounded-3xl overflow-hidden flex flex-col shadow-lg border border-slate-800 transition-all hover:shadow-2xl hover:scale-[1.02]"
                 >
-                  {/* Top Cover */}
-                  <div className={`h-[200px] w-full relative overflow-hidden bg-gradient-to-br ${app.gradient} p-6 flex items-end`}>
-                    <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 mix-blend-overlay">
-                      <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-white blur-2xl" />
-                      <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-white blur-3xl" />
-                    </div>
-                    
-                    <div className="relative z-10 w-full flex justify-between items-end">
-                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">
-                        {app.nama.charAt(0)}
-                      </div>
-                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-[10px] font-bold text-slate-800 uppercase tracking-wider shadow-sm">
-                        {app.kategori}
-                      </span>
-                    </div>
+                  {/* Top Cover - YouTube Video */}
+                  <div className="w-full relative pt-[56.25%] bg-black">
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1&controls=1&modestbranding=1&rel=0`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
                   </div>
 
-                  {/* App Details */}
-                  <div className="p-6 flex flex-col justify-between flex-1">
-                    <div>
-                      <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{app.nama}</h4>
-                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">
-                        {app.deskripsi}
-                      </p>
+                  {/* App Details matching screenshot */}
+                  <div className="p-4 flex items-center justify-between bg-[#18181b] text-white relative z-20">
+                    <div 
+                      className="flex items-center gap-4 flex-1 cursor-pointer"
+                      onClick={() => setSelectedApp(app)}
+                    >
+                      {/* Icon */}
+                      <div className={`w-14 h-14 bg-gradient-to-br ${app.gradient} border border-slate-700/50 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg shrink-0 overflow-hidden`}>
+                        <span className="text-white drop-shadow-md">{app.nama.charAt(0)}</span>
+                      </div>
                       
-                      <div className="flex flex-wrap gap-1.5 mt-4">
-                        {app.techStack.slice(0, 3).map((tech, i) => (
-                          <span key={i} className="px-2.5 py-1 rounded-md border border-slate-200 text-[10px] font-bold text-slate-600 bg-slate-50">
-                            {tech}
-                          </span>
-                        ))}
+                      {/* Info */}
+                      <div className="flex flex-col">
+                        <h4 className="text-sm font-bold line-clamp-1">{app.nama}</h4>
+                        <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
+                        <p className="text-[10px] text-slate-300 font-semibold mt-0.5">Free • In-app purchases</p>
+                        <p className="text-[10px] text-slate-400 mt-0.5">★ 4.5</p>
                       </div>
                     </div>
+                    
+                    {/* Download Button */}
+                    <a 
+                      href="/development"
+                      className="w-10 h-10 rounded-full bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center transition-colors shrink-0 ml-2"
+                    >
+                      <Download className="w-5 h-5 text-slate-300" />
+                    </a>
                   </div>
                 </motion.div>
               ))}
