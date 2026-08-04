@@ -105,17 +105,18 @@ export default function MobileHeader() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-4 left-4 right-4 md:max-w-4xl md:mx-auto z-50 flex items-center justify-between px-6 py-3 rounded-full bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg"
+            className="fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-2 rounded-full bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg"
           >
-            <div className="relative h-7 md:h-8 flex items-center justify-start">
+            <div className="relative h-5 md:h-6 flex items-center justify-start">
               <img 
-                src="/logo1.png" 
+                src="/logo.png" 
                 alt="Store Logo" 
-                className="h-full w-auto object-contain max-w-[120px]"
+                className="h-full w-auto object-contain max-w-[100px]"
               />
             </div>
-            <button className="p-2 hover:bg-slate-200/50 rounded-full transition-colors">
-              <Search className="w-5 h-5 text-slate-800" />
+            <div className="w-[1px] h-4 bg-slate-300"></div>
+            <button className="p-1 hover:bg-slate-200/50 rounded-full transition-colors">
+              <Search className="w-4 h-4 text-slate-800" />
             </button>
           </motion.div>
         )}
