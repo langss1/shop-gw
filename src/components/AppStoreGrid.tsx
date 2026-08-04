@@ -117,9 +117,7 @@ export default function AppStoreGrid() {
                       {/* Info */}
                       <div className="flex flex-col">
                         <h4 className="text-sm md:text-base font-bold line-clamp-1">{app.nama}</h4>
-                        <p className="text-[10px] md:text-xs text-slate-500 mt-0.5 line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
-                        <p className="text-[10px] md:text-xs text-slate-600 font-semibold mt-0.5">Free • In-app purchases</p>
-                        <p className="text-[10px] md:text-xs text-slate-500 mt-0.5">★ 4.5</p>
+                        <p className="text-[10px] md:text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{app.deskripsi}</p>
                       </div>
                     </div>
                     
