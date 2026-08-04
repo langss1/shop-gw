@@ -136,12 +136,9 @@ export default function AppStoreGrid() {
           </AnimatePresence>
         </div>
       </div>
+    </section>
 
-      {/* Slide-out Detail Panel */}
-        </div>
-      </section>
-
-      {/* Selected App Detail Panel */}
+    {/* Selected App Detail Panel */}
       <AnimatePresence>
         {selectedApp && (
           <>
