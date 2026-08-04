@@ -40,7 +40,7 @@ export default function MobileHeader() {
         </div>
 
         {/* Featured Banner (Like Warhammer in the screenshot) */}
-        <div className="relative w-full h-[200px] md:h-[300px] rounded-3xl overflow-hidden mb-6 shadow-sm group cursor-pointer">
+        <div className="relative w-full h-[200px] md:h-[300px] rounded-3xl overflow-hidden mb-8 shadow-sm group cursor-pointer">
           {/* Placeholder Gradient Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700" />
           
@@ -69,7 +69,7 @@ export default function MobileHeader() {
         </div>
 
         {/* Tabs Menu */}
-        <div className="flex items-center border-b border-slate-200 pb-3 w-full">
+        <div className="flex items-center border-b border-slate-200 pb-5 w-full">
           {/* Devices Icon on the far left */}
           <div className="pr-4 pl-2 mr-2 border-r border-slate-200 flex-shrink-0">
             <MonitorSmartphone className="w-5 h-5 text-slate-600" />

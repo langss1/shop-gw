@@ -66,7 +66,7 @@ export default function AppStoreGrid() {
   const closePanel = () => setSelectedApp(null);
 
   return (
-    <section className="pt-6 pb-12 md:pt-8 md:pb-24 bg-white relative z-10" id="store">
+    <section className="pt-10 pb-12 md:pt-12 md:pb-24 bg-white relative z-10" id="store">
       <div className="w-full max-w-6xl mx-auto px-4 md:px-6">
         
 
@@ -80,7 +80,7 @@ export default function AppStoreGrid() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full"
+              className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 w-full"
             >
               {filteredApps.map((app, index) => (
                 <motion.div
