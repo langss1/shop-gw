@@ -67,39 +67,9 @@ export default function AppStoreGrid() {
 
   return (
     <section className="py-12 md:py-24 bg-white relative z-10" id="store">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full max-w-6xl mx-auto md:px-6">
         
-        {/* Header & Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
-          <div>
-            <h2 className="text-3xl md:text-5xl font-bold display-text text-slate-900 tracking-tight">
-              Featured Apps
-            </h2>
-            <p className="text-slate-500 mt-2">Explore the curated collection of informatics applications.</p>
-          </div>
 
-          <div className="flex flex-wrap justify-center gap-2">
-            {CATEGORIES.map((cat) => {
-              const isActive = activeFilter === cat.id;
-              const Icon = cat.icon;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveFilter(cat.id)}
-                  className={`relative px-4 py-2 flex items-center gap-2 rounded-full text-sm font-semibold transition-all ${
-                    isActive ? "bg-slate-900 text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{cat.label}</span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Separator */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-12" />
 
         {/* App Grid */}
         <div className="min-h-[400px]">
@@ -110,7 +80,7 @@ export default function AppStoreGrid() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full"
             >
               {filteredApps.map((app, index) => (
                 <motion.div
@@ -119,7 +89,7 @@ export default function AppStoreGrid() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                   key={app.id}
-                  className="group bg-slate-900 rounded-3xl overflow-hidden flex flex-col shadow-lg border border-slate-800 transition-all hover:shadow-2xl hover:scale-[1.02]"
+                  className="group bg-white rounded-none md:rounded-3xl overflow-hidden flex flex-col shadow-sm border-b md:border border-slate-200 transition-all hover:shadow-lg w-full"
                 >
                   {/* Top Cover - YouTube Video */}
                   <div className="w-full relative pt-[56.25%] bg-black">
@@ -133,32 +103,32 @@ export default function AppStoreGrid() {
                     ></iframe>
                   </div>
 
-                  {/* App Details matching screenshot */}
-                  <div className="p-4 flex items-center justify-between bg-[#18181b] text-white relative z-20">
+                  {/* App Details */}
+                  <div className="p-4 md:p-6 flex items-center justify-between bg-white text-slate-900 relative z-20">
                     <div 
                       className="flex items-center gap-4 flex-1 cursor-pointer"
                       onClick={() => setSelectedApp(app)}
                     >
                       {/* Icon */}
-                      <div className={`w-14 h-14 bg-gradient-to-br ${app.gradient} border border-slate-700/50 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg shrink-0 overflow-hidden`}>
-                        <span className="text-white drop-shadow-md">{app.nama.charAt(0)}</span>
+                      <div className={`w-14 h-14 bg-gradient-to-br ${app.gradient} border border-slate-100 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-sm shrink-0 overflow-hidden`}>
+                        <span className="text-white drop-shadow-sm">{app.nama.charAt(0)}</span>
                       </div>
                       
                       {/* Info */}
                       <div className="flex flex-col">
-                        <h4 className="text-sm font-bold line-clamp-1">{app.nama}</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
-                        <p className="text-[10px] text-slate-300 font-semibold mt-0.5">Free • In-app purchases</p>
-                        <p className="text-[10px] text-slate-400 mt-0.5">★ 4.5</p>
+                        <h4 className="text-sm md:text-base font-bold line-clamp-1">{app.nama}</h4>
+                        <p className="text-[10px] md:text-xs text-slate-500 mt-0.5 line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
+                        <p className="text-[10px] md:text-xs text-slate-600 font-semibold mt-0.5">Free • In-app purchases</p>
+                        <p className="text-[10px] md:text-xs text-slate-500 mt-0.5">★ 4.5</p>
                       </div>
                     </div>
                     
                     {/* Download Button */}
                     <a 
                       href="/development"
-                      className="w-10 h-10 rounded-full bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center transition-colors shrink-0 ml-2"
+                      className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors shrink-0 ml-2"
                     >
-                      <Download className="w-5 h-5 text-slate-300" />
+                      <Download className="w-5 h-5 text-slate-700" />
                     </a>
                   </div>
                 </motion.div>
