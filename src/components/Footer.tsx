@@ -4,7 +4,8 @@ export default function Footer() {
       
       {/* Logos Row */}
       <div className="flex items-center gap-4 mb-6">
-        <img src="/logo.png" alt="Gilang Store Logo" className="h-8 object-contain" />
+        <img src="/logo1.png" alt="Gilang Store Logo" className="h-8 object-contain" />
+        <div className="w-[1px] h-6 bg-slate-300 rounded-full"></div>
         <img src="/logo.jpeg" alt="Logo" className="h-9 w-9 rounded-full object-cover border border-slate-200 shadow-sm" />
       </div>
 
