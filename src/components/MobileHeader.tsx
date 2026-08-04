@@ -24,7 +24,7 @@ export default function MobileHeader() {
 
   return (
     <>
-      <div className="w-full bg-white text-slate-900 pt-6 pb-2 px-4 md:px-8">
+      <div className="w-full bg-white text-slate-900 pt-6 px-4 md:px-8">
         {/* Top Bar: Logo & Search */}
         <div className="flex items-center justify-between mb-6">
           <div className="relative h-8 md:h-10 flex items-center justify-start">
@@ -69,7 +69,7 @@ export default function MobileHeader() {
         </div>
 
         {/* Tabs Menu */}
-        <div className="flex items-center border-b border-slate-200 pb-3 mb-2 w-full">
+        <div className="flex items-center border-b border-slate-200 pb-3 w-full">
           {/* Devices Icon on the far left */}
           <div className="pr-4 pl-2 mr-2 border-r border-slate-200 flex-shrink-0">
             <MonitorSmartphone className="w-5 h-5 text-slate-600" />

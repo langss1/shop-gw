@@ -66,7 +66,7 @@ export default function AppStoreGrid() {
   const closePanel = () => setSelectedApp(null);
 
   return (
-    <section className="py-12 md:py-24 bg-white relative z-10" id="store">
+    <section className="pt-6 pb-12 md:pt-8 md:pb-24 bg-white relative z-10" id="store">
       <div className="w-full max-w-6xl mx-auto md:px-6">
         
 
