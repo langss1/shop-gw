@@ -83,7 +83,7 @@ export default function MobileHeader() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`snap-start whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  className={`snap-start whitespace-nowrap px-3 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                     isActive 
                       ? "bg-gradient-to-r from-blue-800 to-blue-400 text-white shadow-md" 
                       : "bg-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-100"
