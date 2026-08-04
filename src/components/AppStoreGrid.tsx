@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, animate } from "framer-motion";
-import { X, ExternalLink, GitBranch as Github, ChevronRight, LayoutGrid, Cpu, Shield, Code, Download } from "lucide-react";
+import { X, ExternalLink, GitBranch as Github, ChevronRight, LayoutGrid, Cpu, Shield, Code, Download, ChevronLeft, MoreVertical, ChevronDown, Search } from "lucide-react";
 
 // Dummy Apps Database
 const APPS = [
@@ -153,60 +153,102 @@ export default function AppStoreGrid() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               data-lenis-prevent
-              className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-white shadow-2xl z-[110] border-l border-slate-200 overflow-y-auto flex flex-col"
+              className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-[#0f0f11] shadow-2xl z-[110] border-l border-slate-800 overflow-y-auto overflow-x-hidden flex flex-col text-white pb-24"
             >
-              <div className={`h-64 relative p-6 shrink-0 bg-gradient-to-br ${selectedApp.gradient}`}>
-                <button 
-                  onClick={closePanel}
-                  className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white shadow-sm transition-all z-30 cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
+              {/* Top Bar */}
+              <div className="flex items-center justify-between p-4 sticky top-0 bg-[#0f0f11]/90 backdrop-blur-md z-30">
+                <button onClick={closePanel} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                  <ChevronLeft className="w-6 h-6" />
                 </button>
-                <div className="absolute bottom-6 left-6 flex items-center gap-4">
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl">
+                <div className="flex items-center gap-2">
+                  <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <Search className="w-5 h-5" />
+                  </button>
+                  <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <MoreVertical className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="px-5 pt-2">
+                {/* App Title */}
+                <h2 className="text-3xl font-bold mb-6 leading-tight">{selectedApp.nama}</h2>
+
+                {/* App Info Header */}
+                <div className="flex gap-4 mb-6">
+                  {/* Icon */}
+                  <div className={`w-20 h-20 bg-gradient-to-br ${selectedApp.gradient} rounded-2xl flex items-center justify-center font-bold text-4xl shadow-lg shrink-0`}>
                     {selectedApp.nama.charAt(0)}
+                  </div>
+                  
+                  {/* Metadata */}
+                  <div className="flex flex-col justify-center text-sm text-slate-300 space-y-1">
+                    <p className="line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
+                    <p className="font-semibold text-white">★ 4.5 <span className="text-slate-400 font-normal">· In-app purchases</span></p>
+                    <p>Rated 12+</p>
+                    <p>#{selectedApp.kategori}</p>
+                  </div>
+                </div>
+
+                {/* Tags Row */}
+                <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide snap-x pb-2 mb-6 -mx-5 px-5">
+                  {selectedApp.techStack.map((tech: string, i: number) => (
+                    <span key={i} className="snap-start shrink-0 px-4 py-1.5 rounded-full border border-slate-700 text-sm font-medium text-slate-300">
+                      {tech}
+                    </span>
+                  ))}
+                  <span className="snap-start shrink-0 px-4 py-1.5 rounded-full border border-slate-700 text-sm font-medium text-slate-300">
+                    Editor's Choice
+                  </span>
+                </div>
+
+                {/* Screenshots Gallery (Dummy) */}
+                <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide snap-x pb-2 mb-8 -mx-5 px-5">
+                  {[1, 2, 3].map((_, i) => (
+                    <div key={i} className="snap-start shrink-0 w-[240px] h-[135px] rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden relative border border-slate-800">
+                      <div className="absolute inset-0 bg-black/20" />
+                      {/* Abstract pattern for dummy screenshot */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-30">
+                        <LayoutGrid className="w-12 h-12 text-white" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* What's new */}
+                <div className="mb-8">
+                  <div className="flex items-center justify-between mb-4 cursor-pointer">
+                    <h3 className="text-lg font-bold">What's new</h3>
+                    <ChevronDown className="w-5 h-5 text-slate-400" />
+                  </div>
+                  <div className="text-sm text-slate-300 leading-relaxed space-y-1">
+                    <p>[New Features]</p>
+                    <p>Experience the latest updates to {selectedApp.nama}. We've optimized performance and introduced a sleek new user interface to enhance your workflow.</p>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div className="mb-8">
+                  <div className="flex items-center justify-between mb-4 cursor-pointer">
+                    <h3 className="text-lg font-bold">Description</h3>
+                    <ChevronDown className="w-5 h-5 text-slate-400" />
+                  </div>
+                  <div className="text-sm text-slate-300 leading-relaxed">
+                    <p>{selectedApp.deskripsi}</p>
+                    <br />
+                    <p>Designed in 2026, this app brings enterprise-level capabilities directly to your device.</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-8 pb-16 flex-1 bg-white">
-                <div className="mb-8">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold tracking-widest text-blue-600 uppercase">
-                      {selectedApp.kategori} • {selectedApp.tahun}
-                    </span>
-                  </div>
-                  <h3 className="text-3xl font-bold display-text mb-4 text-slate-900">{selectedApp.nama}</h3>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {selectedApp.techStack.map((tech: string, i: number) => (
-                      <span key={i} className="px-3 py-1.5 rounded-lg bg-slate-100 text-xs font-bold text-slate-600">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-slate-600 leading-relaxed text-base">
-                    {selectedApp.deskripsi}
-                  </p>
-                </div>
-
-                {selectedApp.store_links && (
-                  <div className="space-y-4 mt-8 pt-8 border-t border-slate-100">
-                    <h4 className="font-bold text-slate-900 uppercase tracking-wider text-xs mb-4">Available Actions</h4>
-                    {selectedApp.store_links.map((link: any, idx: number) => (
-                      <a
-                        key={idx}
-                        href={link.url}
-                        className="w-full p-4 bg-white border border-slate-200 rounded-2xl flex items-center gap-4 hover:border-blue-500 hover:shadow-md transition-all group"
-                      >
-                        <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors text-slate-700">
-                          {link.type === 'github' ? <Github className="w-5 h-5" /> : <ExternalLink className="w-5 h-5" />}
-                        </div>
-                        <span className="font-bold text-sm flex-1 capitalize text-slate-800">{link.type === 'launch' ? 'Launch Application' : `${link.type} Repository`}</span>
-                        <ChevronRight className="w-5 h-5 text-slate-400 group-hover:translate-x-1 group-hover:text-blue-600 transition-all" />
-                      </a>
-                    ))}
-                  </div>
-                )}
+              {/* Sticky Bottom Actions */}
+              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-4 bg-[#0f0f11]/95 backdrop-blur-md border-t border-slate-800 flex items-center gap-4 z-40">
+                <button className="flex-1 py-3.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold transition-colors">
+                  Install on Wi-Fi
+                </button>
+                <button className="flex-1 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold transition-colors">
+                  Install now
+                </button>
               </div>
             </motion.div>
           </>
