@@ -66,8 +66,9 @@ export default function AppStoreGrid() {
   const closePanel = () => setSelectedApp(null);
 
   return (
-    <section className="pt-10 pb-6 md:pt-12 md:pb-8 bg-white relative z-10" id="store">
-      <div className="w-full max-w-6xl mx-auto px-2 md:px-6">
+    <>
+      <section className="pt-10 pb-6 md:pt-12 md:pb-8 bg-white relative z-10" id="store">
+        <div className="w-full max-w-6xl mx-auto px-2 md:px-6">
         
 
 
@@ -137,16 +138,23 @@ export default function AppStoreGrid() {
       </div>
 
       {/* Slide-out Detail Panel */}
+        </div>
+      </section>
+
+      {/* Selected App Detail Panel */}
       <AnimatePresence>
         {selectedApp && (
           <>
+            {/* Backdrop Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closePanel}
-              className="fixed inset-0 bg-slate-900/40 z-[100] backdrop-blur-sm"
+              className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100]"
             />
+            
+            {/* Slide-out Panel */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -170,14 +178,11 @@ export default function AppStoreGrid() {
                 </div>
               </div>
 
-              <div className="px-5 pt-2">
-                {/* App Title */}
-                <h2 className="text-3xl font-bold mb-6 leading-tight">{selectedApp.nama}</h2>
-
-                {/* App Info Header */}
+              {/* App Info Header */}
+              <div className="p-5 pb-0">
+                <h2 className="text-2xl font-bold mb-4 text-slate-900">{selectedApp.nama}</h2>
                 <div className="flex gap-4 mb-6">
-                  {/* Icon */}
-                  <div className={`w-20 h-20 bg-gradient-to-br ${selectedApp.gradient} rounded-2xl flex items-center justify-center font-bold text-4xl shadow-lg shrink-0`}>
+                  <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-white text-3xl font-bold shadow-lg shrink-0 ${selectedApp.gradient}`}>
                     {selectedApp.nama.charAt(0)}
                   </div>
                   
@@ -251,6 +256,6 @@ export default function AppStoreGrid() {
           </>
         )}
       </AnimatePresence>
-    </section>
+    </>
   );
 }
