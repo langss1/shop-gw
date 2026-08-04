@@ -4,7 +4,6 @@ import Lenis from "lenis";
 import MobileHeader from "@/components/MobileHeader";
 import AppStoreGrid from "@/components/AppStoreGrid";
 import Footer from "@/components/Footer";
-import BottomNav from "@/components/BottomNav";
 
 export default function Home() {
   // Initialize Lenis smooth scroll
@@ -32,9 +31,6 @@ export default function Home() {
       </div>
 
       <Footer />
-      
-      {/* Bottom Navigation */}
-      <BottomNav />
     </main>
   );
 }

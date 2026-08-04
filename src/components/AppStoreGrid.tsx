@@ -220,18 +220,6 @@ export default function AppStoreGrid() {
                   ))}
                 </div>
 
-                {/* What's new */}
-                <div className="mb-8">
-                  <div className="flex items-center justify-between mb-4 cursor-pointer">
-                    <h3 className="text-lg font-bold text-slate-900">What's new</h3>
-                    <ChevronDown className="w-5 h-5 text-slate-500" />
-                  </div>
-                  <div className="text-sm text-slate-600 leading-relaxed space-y-1">
-                    <p>[New Features]</p>
-                    <p>Experience the latest updates to {selectedApp.nama}. We've optimized performance and introduced a sleek new user interface to enhance your workflow.</p>
-                  </div>
-                </div>
-
                 {/* Description */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4 cursor-pointer">
