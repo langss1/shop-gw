@@ -13,12 +13,12 @@ export default function MobileHeader() {
     <div className="w-full bg-white text-slate-900 pt-6 pb-2 px-4 md:px-8">
       {/* Top Bar: Logo & Search */}
       <div className="flex items-center justify-between mb-6">
-        <div className="relative h-8 w-32 md:h-10 md:w-40 flex items-center">
+        <div className="relative h-8 md:h-10 flex items-center justify-start">
           {/* We use a regular img tag here so it doesn't break if logo1.png is missing during dev, but you can change to next/image later */}
           <img 
             src="/logo1.png" 
             alt="Store Logo" 
-            className="h-full w-auto object-contain"
+            className="h-full w-auto object-contain max-w-[150px]"
           />
         </div>
         <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
@@ -62,8 +62,8 @@ export default function MobileHeader() {
           <MonitorSmartphone className="w-5 h-5 text-slate-600" />
         </div>
 
-        {/* Centered Tabs Container */}
-        <div className="flex-1 flex items-center justify-center gap-3 overflow-x-auto scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        {/* Scrollable Tabs Container */}
+        <div className="flex-1 flex items-center justify-start md:justify-center gap-2 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {TABS.map((tab) => {
             const isActive = activeTab === tab;
             return (
@@ -72,8 +72,8 @@ export default function MobileHeader() {
                 onClick={() => setActiveTab(tab)}
                 className={`snap-start whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                   isActive 
-                    ? "bg-slate-800 text-white shadow-md" 
-                    : "bg-transparent text-slate-500 hover:text-slate-800"
+                    ? "bg-slate-900 text-white shadow-md" 
+                    : "bg-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
