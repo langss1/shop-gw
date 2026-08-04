@@ -176,21 +176,28 @@ export default function AppStoreGrid() {
               </div>
 
               {/* App Info Header */}
-              <div className="p-5 pb-0">
-                <h2 className="text-2xl font-bold mb-4 text-slate-900">{selectedApp.nama}</h2>
-                <div className="flex gap-4 mb-6">
-                  <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-white text-3xl font-bold shadow-lg shrink-0 ${selectedApp.gradient}`}>
+              <div className="p-5 pb-4">
+                <div className="flex gap-4 md:gap-5 items-start">
+                  <div className={`w-24 h-24 md:w-28 md:h-28 rounded-[1.25rem] md:rounded-[1.5rem] flex items-center justify-center text-white text-4xl md:text-5xl font-bold shadow-lg shrink-0 ${selectedApp.gradient}`}>
                     {selectedApp.nama.charAt(0)}
                   </div>
                   
                   {/* Metadata */}
-                  <div className="flex flex-col justify-center text-sm text-slate-500 space-y-1">
-                    <p className="line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
-                    <p className="font-semibold text-slate-700">★ 4.5 <span className="text-slate-500 font-normal">· In-app purchases</span></p>
-                    <p>Rated 12+</p>
-                    <p>#{selectedApp.kategori}</p>
+                  <div className="flex flex-col flex-1 pt-1 md:pt-2">
+                    <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight mb-1">{selectedApp.nama}</h2>
+                    <p className="text-sm font-medium text-slate-500 mb-3">{selectedApp.kategori}</p>
+                    
+                    <div className="flex items-center gap-2 mt-auto flex-wrap">
+                      <div className="bg-slate-100 px-2.5 py-1 rounded-md flex items-center gap-1">
+                        <span className="text-xs font-bold text-slate-700">4.5</span>
+                        <span className="text-xs text-yellow-500">★</span>
+                      </div>
+                      <span className="text-xs font-medium text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200">12+</span>
+                      <span className="text-[10px] font-medium text-slate-400">In-app purchases</span>
+                    </div>
                   </div>
                 </div>
+              </div>
 
                 {/* Tags Row */}
                 <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide snap-x pb-2 mb-6 -mx-5 px-5">
