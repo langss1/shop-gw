@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-white text-slate-500 p-6 md:p-8 flex flex-col items-start text-[11px] md:text-xs leading-relaxed border-t border-slate-200">
+    <footer className="bg-transparent text-slate-500 p-6 md:p-8 flex flex-col items-start text-[11px] md:text-xs leading-relaxed border-t border-black">
       
       {/* Logos Row */}
       <div className="flex items-center gap-4 mb-6">
