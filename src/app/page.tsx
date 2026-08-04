@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import MobileHeader from "@/components/MobileHeader";
 import AppStoreGrid from "@/components/AppStoreGrid";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   // Initialize Lenis smooth scroll
@@ -22,16 +23,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20">
+    <main className="min-h-screen flex flex-col bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20">
       <MobileHeader />
       
-      {/* 
-        You can replace AppStoreGrid with a grid that filters based on the active tab 
-        from MobileHeader later. For now, it shows the dummy grid.
-      */}
-      <div className="px-4 md:px-8 pb-12">
+      <div className="px-4 md:px-8 pb-12 flex-1">
         <AppStoreGrid />
       </div>
+
+      <Footer />
     </main>
   );
 }
