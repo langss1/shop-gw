@@ -74,14 +74,7 @@ export default function UnderDevelopment() {
           >
             <Cog className="w-12 h-12 md:w-16 md:h-16" />
           </motion.div>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-4 -right-4 text-emerald-400"
-          >
-            <Sparkles className="w-8 h-8" />
-          </motion.div>
+
         </div>
 
         {/* Content */}
@@ -90,11 +83,7 @@ export default function UnderDevelopment() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
-            <Construction className="w-4 h-4 text-orange-500" />
-            <span className="text-xs font-bold text-slate-700 tracking-widest uppercase">shop.gilangwasis.xyz</span>
-          </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-black display-text text-slate-900 tracking-tight mb-6">
             Feature Under <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Development</span>
