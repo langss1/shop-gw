@@ -1,42 +1,121 @@
 "use client";
-import { useEffect } from "react";
-import Lenis from "lenis";
-import Hero from "@/components/Hero";
-import AppStoreGrid from "@/components/AppStoreGrid";
+import { motion } from "framer-motion";
+import { ArrowLeft, Construction, Cog, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export default function Home() {
-  // Initialize Lenis smooth scroll
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-    });
+export default function UnderDevelopment() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
-  }, []);
+  if (!mounted) return null;
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900">
-      {/* Top-Right Navbar / Logo */}
-      <div className="fixed top-4 right-4 md:top-6 md:right-8 z-50 flex items-center gap-2">
-        <button className="glass-panel px-4 py-2 rounded-full flex items-center gap-3 hover:bg-white/90 transition-all cursor-pointer">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold text-sm shadow-inner">
-            GL
-          </div>
-          <span className="font-semibold text-sm md:text-base text-[var(--text)] display-text tracking-wide">
-            Gilang's Store
-          </span>
-        </button>
+    <main className="min-h-screen bg-slate-50 flex items-center justify-center relative overflow-hidden selection:bg-blue-100 selection:text-blue-900">
+      {/* Animated Background Gradients */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
+        <motion.div 
+          animate={{ 
+            rotate: 360,
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] rounded-full bg-gradient-to-tr from-blue-400/20 to-purple-500/20 blur-[80px]"
+        />
+        <motion.div 
+          animate={{ 
+            rotate: -360,
+            scale: [1, 1.3, 1],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute w-[70vw] h-[70vw] md:w-[35vw] md:h-[35vw] rounded-full bg-gradient-to-bl from-emerald-400/20 to-cyan-400/20 blur-[100px]"
+        />
       </div>
 
-      <Hero />
-      <AppStoreGrid />
+      {/* Floating Particles */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.2, 0.5, 0.2]
+            }}
+            transition={{
+              duration: 3 + (i % 3),
+              repeat: Infinity,
+              delay: i * 0.2,
+              ease: "easeInOut"
+            }}
+            className="absolute rounded-full bg-blue-500/30 blur-[2px]"
+            style={{
+              width: Math.random() * 20 + 5 + "px",
+              height: Math.random() * 20 + 5 + "px",
+              top: Math.random() * 100 + "%",
+              left: Math.random() * 100 + "%",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 w-full max-w-2xl px-6 flex flex-col items-center text-center">
+        {/* Animated Gears */}
+        <div className="relative mb-8 flex items-center justify-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="text-blue-500"
+          >
+            <Cog className="w-24 h-24 md:w-32 md:h-32 opacity-20" />
+          </motion.div>
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute text-purple-500 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          >
+            <Cog className="w-12 h-12 md:w-16 md:h-16" />
+          </motion.div>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-4 -right-4 text-emerald-400"
+          >
+            <Sparkles className="w-8 h-8" />
+          </motion.div>
+        </div>
+
+        {/* Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
+            <Construction className="w-4 h-4 text-orange-500" />
+            <span className="text-xs font-bold text-slate-700 tracking-widest uppercase">shop.gilangwasis.xyz</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-black display-text text-slate-900 tracking-tight mb-6">
+            Feature Under <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Development</span>
+          </h1>
+          
+          <p className="text-slate-500 text-lg max-w-lg mx-auto mb-10 leading-relaxed">
+            We are crafting something amazing. This application is currently being built and will be available soon in the Gilang Store ecosystem.
+          </p>
+
+          <a href="https://gilangwasis.xyz" target="_blank" rel="noopener noreferrer">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-full font-semibold shadow-xl shadow-slate-900/20 hover:bg-blue-600 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span>Visit Main Portfolio</span>
+            </motion.button>
+          </a>
+        </motion.div>
+      </div>
     </main>
   );
 }
