@@ -153,18 +153,18 @@ export default function AppStoreGrid() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               data-lenis-prevent
-              className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-[#0f0f11] shadow-2xl z-[110] border-l border-slate-800 overflow-y-auto overflow-x-hidden flex flex-col text-white pb-24"
+              className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-white shadow-2xl z-[110] border-l border-slate-200 overflow-y-auto overflow-x-hidden flex flex-col text-slate-900 pb-24"
             >
               {/* Top Bar */}
-              <div className="flex items-center justify-between p-4 sticky top-0 bg-[#0f0f11]/90 backdrop-blur-md z-30">
-                <button onClick={closePanel} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+              <div className="flex items-center justify-between p-4 sticky top-0 bg-white/90 backdrop-blur-md z-30">
+                <button onClick={closePanel} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-700">
                   <ChevronLeft className="w-6 h-6" />
                 </button>
-                <div className="flex items-center gap-2">
-                  <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                <div className="flex items-center gap-2 text-slate-700">
+                  <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
                     <Search className="w-5 h-5" />
                   </button>
-                  <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                  <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
                     <MoreVertical className="w-5 h-5" />
                   </button>
                 </div>
@@ -182,9 +182,9 @@ export default function AppStoreGrid() {
                   </div>
                   
                   {/* Metadata */}
-                  <div className="flex flex-col justify-center text-sm text-slate-300 space-y-1">
+                  <div className="flex flex-col justify-center text-sm text-slate-500 space-y-1">
                     <p className="line-clamp-1">Copyright © Gilang Store. All Rights Reserved.</p>
-                    <p className="font-semibold text-white">★ 4.5 <span className="text-slate-400 font-normal">· In-app purchases</span></p>
+                    <p className="font-semibold text-slate-700">★ 4.5 <span className="text-slate-500 font-normal">· In-app purchases</span></p>
                     <p>Rated 12+</p>
                     <p>#{selectedApp.kategori}</p>
                   </div>
@@ -193,11 +193,11 @@ export default function AppStoreGrid() {
                 {/* Tags Row */}
                 <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide snap-x pb-2 mb-6 -mx-5 px-5">
                   {selectedApp.techStack.map((tech: string, i: number) => (
-                    <span key={i} className="snap-start shrink-0 px-4 py-1.5 rounded-full border border-slate-700 text-sm font-medium text-slate-300">
+                    <span key={i} className="snap-start shrink-0 px-4 py-1.5 rounded-full border border-slate-200 text-sm font-medium text-slate-600">
                       {tech}
                     </span>
                   ))}
-                  <span className="snap-start shrink-0 px-4 py-1.5 rounded-full border border-slate-700 text-sm font-medium text-slate-300">
+                  <span className="snap-start shrink-0 px-4 py-1.5 rounded-full border border-slate-200 text-sm font-medium text-slate-600">
                     Editor's Choice
                   </span>
                 </div>
@@ -205,11 +205,11 @@ export default function AppStoreGrid() {
                 {/* Screenshots Gallery (Dummy) */}
                 <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide snap-x pb-2 mb-8 -mx-5 px-5">
                   {[1, 2, 3].map((_, i) => (
-                    <div key={i} className="snap-start shrink-0 w-[240px] h-[135px] rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden relative border border-slate-800">
-                      <div className="absolute inset-0 bg-black/20" />
+                    <div key={i} className="snap-start shrink-0 w-[240px] h-[135px] rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden relative border border-slate-200">
+                      <div className="absolute inset-0 bg-white/20" />
                       {/* Abstract pattern for dummy screenshot */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-30">
-                        <LayoutGrid className="w-12 h-12 text-white" />
+                        <LayoutGrid className="w-12 h-12 text-slate-400" />
                       </div>
                     </div>
                   ))}
@@ -218,10 +218,10 @@ export default function AppStoreGrid() {
                 {/* What's new */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4 cursor-pointer">
-                    <h3 className="text-lg font-bold">What's new</h3>
-                    <ChevronDown className="w-5 h-5 text-slate-400" />
+                    <h3 className="text-lg font-bold text-slate-900">What's new</h3>
+                    <ChevronDown className="w-5 h-5 text-slate-500" />
                   </div>
-                  <div className="text-sm text-slate-300 leading-relaxed space-y-1">
+                  <div className="text-sm text-slate-600 leading-relaxed space-y-1">
                     <p>[New Features]</p>
                     <p>Experience the latest updates to {selectedApp.nama}. We've optimized performance and introduced a sleek new user interface to enhance your workflow.</p>
                   </div>
@@ -230,10 +230,10 @@ export default function AppStoreGrid() {
                 {/* Description */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4 cursor-pointer">
-                    <h3 className="text-lg font-bold">Description</h3>
-                    <ChevronDown className="w-5 h-5 text-slate-400" />
+                    <h3 className="text-lg font-bold text-slate-900">Description</h3>
+                    <ChevronDown className="w-5 h-5 text-slate-500" />
                   </div>
-                  <div className="text-sm text-slate-300 leading-relaxed">
+                  <div className="text-sm text-slate-600 leading-relaxed">
                     <p>{selectedApp.deskripsi}</p>
                     <br />
                     <p>Designed in 2026, this app brings enterprise-level capabilities directly to your device.</p>
@@ -242,8 +242,8 @@ export default function AppStoreGrid() {
               </div>
 
               {/* Sticky Bottom Actions */}
-              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-4 bg-[#0f0f11]/95 backdrop-blur-md border-t border-slate-800 flex items-center gap-4 z-40">
-                <button className="flex-1 py-3.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold transition-colors">
+              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center gap-4 z-40">
+                <button className="flex-1 py-3.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors">
                   Install on Wi-Fi
                 </button>
                 <button className="flex-1 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold transition-colors">

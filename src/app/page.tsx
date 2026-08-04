@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import MobileHeader from "@/components/MobileHeader";
 import AppStoreGrid from "@/components/AppStoreGrid";
 import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
 
 export default function Home() {
   // Initialize Lenis smooth scroll
@@ -23,7 +24,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20">
+    <main className="min-h-screen flex flex-col bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20 relative">
       <MobileHeader />
       
       <div className="px-4 md:px-8 pb-4 flex-1 bg-white">
@@ -31,6 +32,9 @@ export default function Home() {
       </div>
 
       <Footer />
+      
+      {/* Bottom Navigation */}
+      <BottomNav />
     </main>
   );
 }
