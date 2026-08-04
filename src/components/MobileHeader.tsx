@@ -24,7 +24,7 @@ export default function MobileHeader() {
 
   return (
     <>
-      <div className="w-full bg-white text-slate-900 pt-6 px-2 md:px-6">
+      <div className="w-full bg-white text-slate-900 pt-6 px-3 md:px-6">
         {/* Top Bar: Logo & Search */}
         <div className="flex items-center justify-between mb-6">
           <div className="relative h-8 md:h-10 flex items-center justify-start">

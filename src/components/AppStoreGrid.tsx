@@ -68,7 +68,7 @@ export default function AppStoreGrid() {
   return (
     <>
       <section className="pt-10 pb-6 md:pt-12 md:pb-8 bg-white relative z-10" id="store">
-        <div className="w-full max-w-6xl mx-auto px-2 md:px-6">
+        <div className="w-full max-w-6xl mx-auto px-3 md:px-6">
         
 
 
