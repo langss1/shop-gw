@@ -1,5 +1,5 @@
 "use client";
-import { Search } from "lucide-react";
+import { Search, MonitorSmartphone } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -19,11 +19,6 @@ export default function MobileHeader() {
             src="/logo1.png" 
             alt="Store Logo" 
             className="h-full w-auto object-contain"
-            onError={(e) => {
-              // Fallback text if logo1.png is not found
-              (e.target as HTMLImageElement).style.display = 'none';
-              e.currentTarget.parentElement!.innerHTML = '<span class="font-bold text-xl tracking-tight">App Store</span>';
-            }}
           />
         </div>
         <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
@@ -61,23 +56,31 @@ export default function MobileHeader() {
       </div>
 
       {/* Tabs Menu */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        {TABS.map((tab) => {
-          const isActive = activeTab === tab;
-          return (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`snap-start whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                isActive 
-                  ? "bg-slate-800 text-white shadow-md" 
-                  : "bg-transparent text-slate-500 hover:bg-slate-100"
-              }`}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          );
-        })}
+      <div className="flex items-center border-b border-slate-200 pb-3 mb-2 w-full">
+        {/* Devices Icon on the far left */}
+        <div className="pr-4 pl-2 mr-2 border-r border-slate-200 flex-shrink-0">
+          <MonitorSmartphone className="w-5 h-5 text-slate-600" />
+        </div>
+
+        {/* Centered Tabs Container */}
+        <div className="flex-1 flex items-center justify-center gap-3 overflow-x-auto scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab;
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`snap-start whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  isActive 
+                    ? "bg-slate-800 text-white shadow-md" 
+                    : "bg-transparent text-slate-500 hover:text-slate-800"
+                }`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
