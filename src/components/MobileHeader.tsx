@@ -16,7 +16,7 @@ export default function MobileHeader() {
         <div className="relative h-8 w-32 md:h-10 md:w-40 flex items-center">
           {/* We use a regular img tag here so it doesn't break if logo1.png is missing during dev, but you can change to next/image later */}
           <img 
-            src="/logo1.png" 
+            src="/logo.png" 
             alt="Store Logo" 
             className="h-full w-auto object-contain"
           />
