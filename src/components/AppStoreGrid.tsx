@@ -231,9 +231,9 @@ export default function AppStoreGrid() {
                 </div>
               </div>
 
-              {/* Sticky Bottom Actions */}
-              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center z-40 pb-24 md:pb-4">
-                <button className="w-full py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold transition-colors">
+              {/* Sticky Floating Action */}
+              <div className="fixed bottom-6 right-0 w-full md:w-[500px] px-6 flex justify-center z-40 pointer-events-none">
+                <button className="w-full py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold transition-transform active:scale-95 shadow-2xl shadow-blue-600/30 pointer-events-auto">
                   Install
                 </button>
               </div>
