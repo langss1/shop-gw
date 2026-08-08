@@ -172,23 +172,24 @@ export default function MobileHeader({
         </div>
 
         {/* Tabs Menu */}
-        <div className="-mx-3 md:-mx-6 px-3 md:px-6 border-b border-slate-200 pb-5 w-full flex items-center justify-center">
+        <div className="-mx-3 md:-mx-6 px-3 md:px-6 border-b border-slate-200 pb-5 w-full relative flex items-center justify-center">
+          {/* Devices Icon anchored on the left */}
+          <div className="hidden sm:flex absolute left-3 md:left-6 items-center pr-3 border-r border-slate-200">
+            <MonitorSmartphone className="w-5 h-5 text-slate-600" />
+          </div>
+
+          {/* Symmetrically Centered Tabs */}
           <div
-            className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1 max-w-full"
+            className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1 max-w-full mx-auto"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {/* Devices Icon */}
-            <div className="pr-2.5 mr-0.5 border-r border-slate-200 flex-shrink-0 flex items-center">
-              <MonitorSmartphone className="w-5 h-5 text-slate-600" />
-            </div>
-
             {PLATFORMS.map((platform) => {
               const isActive = activePlatform === platform.id;
               return (
                 <button
                   key={platform.id}
                   onClick={() => onPlatformChange(platform.id)}
-                  className={`snap-start whitespace-nowrap px-3 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  className={`snap-start whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                     isActive
                       ? "bg-gradient-to-r from-blue-800 to-blue-400 text-white shadow-md"
                       : "bg-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-100"
