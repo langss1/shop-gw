@@ -425,50 +425,51 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
       <AnimatePresence>
         {pendingDownloadApp && (
           <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
-            {/* Backdrop */}
+            {/* Backdrop with Blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setPendingDownloadApp(null)}
-              className="absolute inset-0 bg-slate-900/50 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
             />
 
-            {/* Modal Card */}
+            {/* Modal Container */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              initial={{ scale: 0.92, opacity: 0, y: 24 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 text-slate-900 z-10 space-y-5"
+              exit={{ scale: 0.92, opacity: 0, y: 24 }}
+              transition={{ type: "spring", damping: 26, stiffness: 320 }}
+              className="relative w-full max-w-[420px] bg-white rounded-[28px] p-6 shadow-2xl border border-slate-100 text-slate-900 z-10 space-y-5 overflow-hidden"
             >
-              {/* Header */}
-              <div className="flex items-start justify-between">
+              {/* Header Row */}
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100/50">
+                    <ShieldCheck className="w-5 h-5 stroke-[2.2]" />
                   </div>
                   <div>
                     <h3 className="text-base font-extrabold text-slate-900 leading-tight">
                       Confirm Installation
                     </h3>
-                    <p className="text-xs text-slate-500 font-medium">
-                      Terms & Conditions Agreement
+                    <p className="text-[11px] font-medium text-slate-400">
+                      Official Verified Package
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setPendingDownloadApp(null)}
-                  className="p-1.5 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors"
+                  className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors active:scale-95"
+                  aria-label="Close"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* App Summary Box */}
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+              {/* App Hero Box */}
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/80 border border-slate-200/60 flex items-center gap-3.5 shadow-xs">
                 <div
-                  className={`w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center text-white text-xl font-bold shrink-0 bg-gradient-to-br ${pendingDownloadApp.gradient}`}
+                  className={`w-14 h-14 rounded-2xl overflow-hidden flex items-center justify-center text-white text-2xl font-extrabold shrink-0 shadow-sm border border-white bg-gradient-to-br ${pendingDownloadApp.gradient}`}
                 >
                   {pendingDownloadApp.icon_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
@@ -481,32 +482,39 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                     pendingDownloadApp.name.charAt(0)
                   )}
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h4 className="text-sm font-bold text-slate-900 truncate">
+                <div className="min-w-0 flex-1 space-y-1">
+                  <h4 className="text-sm font-extrabold text-slate-900 truncate tracking-tight">
                     {pendingDownloadApp.name}
                   </h4>
-                  <p className="text-xs text-slate-500 font-medium">
-                    {pendingDownloadApp.category} · {formatBytes(pendingDownloadApp.download_size_bytes) || "24 MB"}
-                  </p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2 py-0.5 rounded-md bg-white border border-slate-200/80 text-[10px] font-bold text-slate-700">
+                      {pendingDownloadApp.category}
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-500">
+                      {formatBytes(pendingDownloadApp.download_size_bytes) || "24 MB"}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Terms Checkbox & Agreement Notice */}
-              <div className="space-y-3 pt-1">
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <input
-                    type="checkbox"
-                    checked={hasAgreedTerms}
-                    onChange={(e) => setHasAgreedTerms(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
-                  />
-                  <span className="text-xs text-slate-600 leading-relaxed">
+              {/* Terms Checkbox Card */}
+              <div className="p-4 rounded-2xl bg-slate-50/90 border border-slate-200/60 space-y-2">
+                <label className="flex items-start gap-3 cursor-pointer group select-none">
+                  <div className="relative flex items-center mt-0.5">
+                    <input
+                      type="checkbox"
+                      checked={hasAgreedTerms}
+                      onChange={(e) => setHasAgreedTerms(e.target.checked)}
+                      className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
+                    />
+                  </div>
+                  <span className="text-xs text-slate-600 leading-relaxed font-medium">
                     I have read and agree to the{" "}
                     <a
                       href="/terms"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-bold text-blue-600 hover:underline inline-flex items-center gap-0.5"
+                      className="font-bold text-blue-600 hover:text-blue-700 hover:underline inline-flex items-center gap-0.5"
                     >
                       <span>Terms & Conditions</span>
                       <ExternalLink className="w-3 h-3" />
@@ -516,7 +524,7 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                       href="/privacy"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-bold text-blue-600 hover:underline inline-flex items-center gap-0.5"
+                      className="font-bold text-blue-600 hover:text-blue-700 hover:underline inline-flex items-center gap-0.5"
                     >
                       <span>Privacy Policy</span>
                       <ExternalLink className="w-3 h-3" />
@@ -525,12 +533,12 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                 </label>
               </div>
 
-              {/* Modal Action Buttons */}
-              <div className="flex items-center gap-3 pt-2">
+              {/* Modal Actions */}
+              <div className="flex items-center gap-3 pt-1">
                 <button
                   type="button"
                   onClick={() => setPendingDownloadApp(null)}
-                  className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors"
+                  className="flex-1 py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-bold transition-all text-center border border-slate-200/60 active:scale-[0.98]"
                 >
                   Cancel
                 </button>
@@ -543,10 +551,10 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                     setPendingDownloadApp(null);
                     window.location.href = `/api/download/${slug}`;
                   }}
-                  className="flex-1 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5 active:scale-[0.98]"
+                  className="flex-1 py-3 px-4 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs md:text-sm font-bold transition-all text-center shadow-lg shadow-blue-500/25 flex items-center justify-center gap-1.5 active:scale-[0.98]"
                 >
-                  <Download className="w-4 h-4 stroke-[2.5]" />
-                  <span>Agree & Download</span>
+                  <Download className="w-4 h-4 stroke-[2.5] shrink-0" />
+                  <span className="truncate">Agree & Download</span>
                 </button>
               </div>
             </motion.div>
