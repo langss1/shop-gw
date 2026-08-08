@@ -176,12 +176,18 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                 </div>
               </div>
 
-              {/* App Info Header (Hero Row) */}
+              {/* App Info Header - Google Play Style Layout */}
               <div className="p-5 pb-3">
-                <div className="flex gap-4 items-start">
-                  {/* App Icon */}
+                {/* Big Title at top */}
+                <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight mb-4 tracking-tight">
+                  {selectedApp.name}
+                </h1>
+
+                {/* Horizontal Scrollable Row with App Icon + Metrics */}
+                <div className="flex items-center gap-4 md:gap-5 overflow-x-auto scrollbar-hide snap-x pb-2 -mx-5 px-5">
+                  {/* 1. App Icon */}
                   <div
-                    className={`w-24 h-24 rounded-[22px] overflow-hidden flex items-center justify-center text-white text-4xl font-extrabold shadow-md shrink-0 border border-slate-100 bg-gradient-to-br ${selectedApp.gradient}`}
+                    className={`w-16 h-16 md:w-20 md:h-20 rounded-[18px] md:rounded-[20px] overflow-hidden flex items-center justify-center text-white text-3xl font-extrabold shadow-sm shrink-0 border border-slate-100 bg-gradient-to-br ${selectedApp.gradient}`}
                   >
                     {selectedApp.icon_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
@@ -195,61 +201,51 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                     )}
                   </div>
 
-                  {/* App Title & Info */}
-                  <div className="flex flex-col flex-1 pt-0.5 min-w-0">
-                    <h1 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight mb-1.5 tracking-tight truncate">
-                      {selectedApp.name}
-                    </h1>
+                  {/* Vertical Divider */}
+                  <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
 
-                    {/* Description */}
-                    <p className="text-xs text-slate-500 line-clamp-2 mb-2 font-medium leading-relaxed">
-                      {selectedApp.description || selectedApp.tagline || selectedApp.category}
-                    </p>
-
-                    {/* In-App Purchases Tag */}
-                    {selectedApp.has_iap && (
-                      <span className="inline-block text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md w-fit">
-                        In-app purchases
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Store Highlight Key Metrics Bar */}
-              <div className="px-5 my-2">
-                <div className="bg-slate-50 rounded-2xl p-3 border border-slate-100 grid grid-cols-4 divide-x divide-slate-200/80 text-center">
-                  {/* Rating */}
-                  <div className="flex flex-col items-center justify-center px-1">
-                    <div className="flex items-center gap-1 font-bold text-slate-900 text-sm">
+                  {/* 2. Rating */}
+                  <div className="flex flex-col items-center justify-center shrink-0 min-w-[55px]">
+                    <div className="flex items-center gap-1 font-extrabold text-slate-900 text-sm">
                       <span>{selectedApp.rating || "4.5"}</span>
-                      <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                      <Star className="w-3.5 h-3.5 fill-slate-800 text-slate-800" />
                     </div>
-                    <span className="text-[10px] font-medium text-slate-400 mt-0.5">Rating</span>
+                    <span className="text-[10px] font-medium text-slate-500 mt-1">Rating</span>
                   </div>
 
-                  {/* Size */}
-                  <div className="flex flex-col items-center justify-center px-1">
-                    <span className="font-bold text-slate-900 text-sm">
-                      {selectedSize || "24 MB"}
-                    </span>
-                    <span className="text-[10px] font-medium text-slate-400 mt-0.5">Size</span>
-                  </div>
+                  {/* Vertical Divider */}
+                  <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
 
-                  {/* Rated */}
-                  <div className="flex flex-col items-center justify-center px-1">
-                    <span className="font-bold text-slate-900 text-sm px-1.5 py-0.5 bg-slate-200/70 rounded text-[11px]">
+                  {/* 3. Age Rating */}
+                  <div className="flex flex-col items-center justify-center shrink-0 min-w-[70px]">
+                    <span className="border border-slate-800 text-slate-900 font-extrabold text-[10px] px-1.5 py-0.5 rounded leading-none">
                       {selectedApp.content_rating || "12+"}
                     </span>
-                    <span className="text-[10px] font-medium text-slate-400 mt-0.5">Age Rated</span>
+                    <span className="text-[10px] font-medium text-slate-500 mt-1">
+                      Rated for {selectedApp.content_rating || "12+"}
+                    </span>
                   </div>
 
-                  {/* Downloads */}
-                  <div className="flex flex-col items-center justify-center px-1">
-                    <span className="font-bold text-slate-900 text-sm">
+                  {/* Vertical Divider */}
+                  <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
+
+                  {/* 4. Download Size */}
+                  <div className="flex flex-col items-center justify-center shrink-0 min-w-[60px]">
+                    <Download className="w-4 h-4 text-slate-800 stroke-[2.5]" />
+                    <span className="text-[10px] font-extrabold text-slate-900 mt-1">
+                      {selectedSize || "24 MB"}
+                    </span>
+                  </div>
+
+                  {/* Vertical Divider */}
+                  <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
+
+                  {/* 5. Downloads Count */}
+                  <div className="flex flex-col items-center justify-center shrink-0 min-w-[65px]">
+                    <span className="font-extrabold text-slate-900 text-sm">
                       {selectedApp.download_count > 0 ? `${selectedApp.download_count}+` : "1K+"}
                     </span>
-                    <span className="text-[10px] font-medium text-slate-400 mt-0.5">Downloads</span>
+                    <span className="text-[10px] font-medium text-slate-500 mt-1">Downloads</span>
                   </div>
                 </div>
               </div>
