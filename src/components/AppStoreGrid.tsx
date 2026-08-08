@@ -549,7 +549,7 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   rel="noopener noreferrer"
                   className="flex-1 py-3 px-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs md:text-sm transition-all text-center flex items-center justify-center gap-1.5 border border-slate-200 active:scale-[0.99]"
                 >
-                  <MessageSquare className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <MessageSquare className="w-4 h-4 text-slate-900 shrink-0" />
                   <span className="truncate">Contact Custom App</span>
                 </a>
 
