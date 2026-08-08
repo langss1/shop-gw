@@ -228,8 +228,8 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   {selectedApp.name}
                 </h1>
 
-                {/* Fixed Icon + Scrollable Metrics Row */}
-                <div className="flex items-center gap-4 md:gap-5">
+                {/* Fixed Icon + Compact Metrics Row */}
+                <div className="flex items-center gap-3">
                   {/* Fixed App Icon */}
                   <div
                     className={`w-16 h-16 md:w-20 md:h-20 rounded-[18px] md:rounded-[20px] overflow-hidden flex items-center justify-center text-white text-3xl font-extrabold shadow-sm shrink-0 border border-slate-100 bg-gradient-to-br ${selectedApp.gradient}`}
@@ -249,39 +249,39 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   {/* Vertical Divider */}
                   <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
 
-                  {/* Scrollable Metrics Container */}
-                  <div className="flex-1 flex items-center gap-5 overflow-x-auto scrollbar-hide snap-x pb-1 min-w-0">
-                    {/* 2. Age Rating */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[75px]">
+                  {/* Compact Metrics Container */}
+                  <div className="flex-1 flex items-center gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x pb-1 min-w-0">
+                    {/* 1. Age Rating */}
+                    <div className="flex flex-col items-center justify-center shrink-0">
                       <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[11px] px-1.5 py-0.5 rounded-md leading-none">
                         {selectedApp.content_rating || "12+"}
                       </div>
-                      <div className="flex items-center gap-0.5 text-[10px] font-medium text-slate-500 mt-1">
+                      <div className="flex items-center gap-0.5 text-[10px] font-medium text-slate-500 mt-1 whitespace-nowrap">
                         <span>Rated for {selectedApp.content_rating || "12+"}</span>
                         <Info className="w-2.5 h-2.5 text-slate-500" />
                       </div>
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-[1px] h-9 bg-slate-200/80 shrink-0" />
+                    <div className="w-[1px] h-8 bg-slate-200/80 shrink-0" />
 
-                    {/* 3. Download Size */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[65px]">
+                    {/* 2. Download Size */}
+                    <div className="flex flex-col items-center justify-center shrink-0">
                       <Download className="w-4 h-4 text-slate-900 stroke-[2.5]" />
-                      <span className="text-[10px] font-extrabold text-slate-900 mt-1 leading-tight">
+                      <span className="text-[10px] font-extrabold text-slate-900 mt-1 leading-tight whitespace-nowrap">
                         {selectedSize || "24 MB"}
                       </span>
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-[1px] h-9 bg-slate-200/80 shrink-0" />
+                    <div className="w-[1px] h-8 bg-slate-200/80 shrink-0" />
 
-                    {/* 4. Downloads Count */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[70px]">
-                      <span className="font-extrabold text-slate-900 text-sm leading-tight">
+                    {/* 3. Downloads Count */}
+                    <div className="flex flex-col items-center justify-center shrink-0">
+                      <span className="font-extrabold text-slate-900 text-sm leading-tight whitespace-nowrap">
                         {selectedApp.download_count > 0 ? `${selectedApp.download_count}+` : "1K+"}
                       </span>
-                      <span className="text-[10px] font-medium text-slate-500 mt-1">Downloads</span>
+                      <span className="text-[10px] font-medium text-slate-500 mt-1 whitespace-nowrap">Downloads</span>
                     </div>
                   </div>
                 </div>
