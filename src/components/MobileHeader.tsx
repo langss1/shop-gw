@@ -33,8 +33,8 @@ export default function MobileHeader({
   const [isScrolled, setIsScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    // Show sticky header when scrolled past 150px
-    if (latest > 150) {
+    // Show sticky header when scrolled past 80px
+    if (latest > 80) {
       setIsScrolled(true);
     } else {
       setIsScrolled(false);
@@ -168,23 +168,27 @@ export default function MobileHeader({
       <AnimatePresence>
         {isScrolled && (
           <motion.div
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -100, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-2 rounded-full bg-white/80 backdrop-blur-xl border border-slate-200 shadow-md"
+            initial={{ y: -100, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: -100, opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-2 rounded-full bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-xl"
           >
-            <div className="relative h-6 md:h-7 flex items-center justify-start">
+            <div className="relative h-6 flex items-center justify-start">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo.png"
+                src="/logo1.png"
                 alt="Store Logo"
-                className="h-full w-auto object-contain max-w-[100px]"
+                className="h-full w-auto object-contain max-w-[110px]"
               />
             </div>
-            <div className="w-[1px] h-5 bg-slate-400 rounded-full"></div>
-            <button className="p-1.5 hover:bg-slate-200/50 rounded-full transition-colors">
-              <Search className="w-5 h-5 text-slate-800" strokeWidth={2.5} />
+            <div className="w-[1px] h-4 bg-slate-300 rounded-full" />
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="p-1 hover:bg-slate-100 rounded-full transition-colors text-slate-800"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5 stroke-[2.5]" />
             </button>
           </motion.div>
         )}
