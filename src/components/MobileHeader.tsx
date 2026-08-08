@@ -20,14 +20,14 @@ export default function MobileHeader({
   banners,
   activePlatform,
   onPlatformChange,
-  searchQuery,
-  onSearchChange,
+  searchQuery = "",
+  onSearchChange = () => {},
 }: {
   banners: Banner[];
   activePlatform: Platform;
   onPlatformChange: (platform: Platform) => void;
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
 }) {
   const slides = banners.length > 0 ? banners : [FALLBACK_BANNER];
   const [slideIndex, setSlideIndex] = useState(0);
