@@ -15,6 +15,9 @@ import {
   Info,
   HardDrive,
   ChevronRight,
+  ShieldCheck,
+  X,
+  ExternalLink,
 } from "lucide-react";
 
 import { formatBytes, youtubeEmbedUrl } from "@/lib/constants";
@@ -23,6 +26,8 @@ import type { AppWithRelations } from "@/lib/types";
 export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   const [selectedApp, setSelectedApp] = useState<AppWithRelations | null>(null);
   const [isAboutExpanded, setIsAboutExpanded] = useState(true);
+  const [pendingDownloadApp, setPendingDownloadApp] = useState<AppWithRelations | null>(null);
+  const [hasAgreedTerms, setHasAgreedTerms] = useState(true);
 
   useEffect(() => {
     if (selectedApp) {
@@ -120,13 +125,14 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                       </div>
 
                       {/* Download Button */}
-                      <a
-                        href={`/api/download/${app.slug}`}
+                      <button
+                        type="button"
+                        onClick={() => setPendingDownloadApp(app)}
                         className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors shrink-0 ml-2"
                         aria-label={`Download ${app.name}`}
                       >
                         <Download className="w-5 h-5 text-slate-700" strokeWidth={2.5} />
-                      </a>
+                      </button>
                     </div>
                   </motion.div>
                 );
@@ -401,16 +407,150 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                 </a>
 
                 {/* Right Button: Install App */}
-                <a
-                  href={`/api/download/${selectedApp.slug}`}
+                <button
+                  type="button"
+                  onClick={() => setPendingDownloadApp(selectedApp)}
                   className="flex-1 py-3 px-2 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs md:text-sm transition-all text-center flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-[0.99]"
                 >
                   <Download className="w-4 h-4 stroke-[2.5] shrink-0" />
                   <span className="truncate">Install App</span>
-                </a>
+                </button>
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* Install Confirmation & Terms Agreement Modal */}
+      <AnimatePresence>
+        {pendingDownloadApp && (
+          <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setPendingDownloadApp(null)}
+              className="absolute inset-0 bg-slate-900/50 backdrop-blur-md"
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 text-slate-900 z-10 space-y-5"
+            >
+              {/* Header */}
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-extrabold text-slate-900 leading-tight">
+                      Confirm Installation
+                    </h3>
+                    <p className="text-xs text-slate-500 font-medium">
+                      Terms & Conditions Agreement
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setPendingDownloadApp(null)}
+                  className="p-1.5 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* App Summary Box */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                <div
+                  className={`w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center text-white text-xl font-bold shrink-0 bg-gradient-to-br ${pendingDownloadApp.gradient}`}
+                >
+                  {pendingDownloadApp.icon_url ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={pendingDownloadApp.icon_url}
+                      alt={pendingDownloadApp.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    pendingDownloadApp.name.charAt(0)
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-sm font-bold text-slate-900 truncate">
+                    {pendingDownloadApp.name}
+                  </h4>
+                  <p className="text-xs text-slate-500 font-medium">
+                    {pendingDownloadApp.category} · {formatBytes(pendingDownloadApp.download_size_bytes) || "24 MB"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Terms Checkbox & Agreement Notice */}
+              <div className="space-y-3 pt-1">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={hasAgreedTerms}
+                    onChange={(e) => setHasAgreedTerms(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
+                  />
+                  <span className="text-xs text-slate-600 leading-relaxed">
+                    I have read and agree to the{" "}
+                    <a
+                      href="/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-bold text-blue-600 hover:underline inline-flex items-center gap-0.5"
+                    >
+                      <span>Terms & Conditions</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>{" "}
+                    and{" "}
+                    <a
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-bold text-blue-600 hover:underline inline-flex items-center gap-0.5"
+                    >
+                      <span>Privacy Policy</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </span>
+                </label>
+              </div>
+
+              {/* Modal Action Buttons */}
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setPendingDownloadApp(null)}
+                  className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  disabled={!hasAgreedTerms}
+                  onClick={() => {
+                    const slug = pendingDownloadApp.slug;
+                    setPendingDownloadApp(null);
+                    window.location.href = `/api/download/${slug}`;
+                  }}
+                  className="flex-1 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5 active:scale-[0.98]"
+                >
+                  <Download className="w-4 h-4 stroke-[2.5]" />
+                  <span>Agree & Download</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </>
