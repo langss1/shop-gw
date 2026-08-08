@@ -114,18 +114,18 @@ export default function MobileHeader({
             </div>
           ) : (
             <>
-              <div className="relative h-8 md:h-10 flex items-center justify-start">
+              <div className="relative h-9 md:h-11 flex items-center justify-start">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/logo1.png"
                   alt="Store Logo"
-                  className="h-full w-auto object-contain max-w-[150px]"
+                  className="h-full w-auto object-contain max-w-[170px]"
                 />
               </div>
               <button
                 onClick={() => setIsSearchOpen(true)}
                 aria-label="Cari app"
-                className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2.5 hover:bg-slate-100 rounded-full transition-colors active:scale-95"
               >
                 <Search className="w-6 h-6 text-slate-800" />
               </button>
@@ -134,7 +134,7 @@ export default function MobileHeader({
         </div>
 
         {/* Featured Banner Carousel */}
-        <div className="relative w-full h-[200px] md:h-[300px] rounded-3xl overflow-hidden mb-8 shadow-sm group">
+        <div className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] rounded-3xl overflow-hidden mb-8 shadow-sm group">
           <AnimatePresence mode="wait">
             <motion.div
               key={banner.id}
@@ -173,14 +173,14 @@ export default function MobileHeader({
 
         {/* Tabs Menu */}
         <div className="-mx-3 md:-mx-6 px-3 md:px-6 border-b border-slate-200 pb-5 w-full relative flex items-center justify-center">
-          {/* Devices Icon anchored on the left */}
-          <div className="hidden sm:flex absolute left-3 md:left-6 items-center pr-3 border-r border-slate-200">
+          {/* Devices Icon anchored on the left for desktop */}
+          <div className="hidden md:flex absolute left-6 items-center pr-3 border-r border-slate-200">
             <MonitorSmartphone className="w-5 h-5 text-slate-600" />
           </div>
 
-          {/* Symmetrically Centered Tabs */}
+          {/* Responsive Centered Tabs */}
           <div
-            className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1 max-w-full mx-auto"
+            className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1 max-w-full mx-auto w-full"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {PLATFORMS.map((platform) => {
@@ -189,10 +189,10 @@ export default function MobileHeader({
                 <button
                   key={platform.id}
                   onClick={() => onPlatformChange(platform.id)}
-                  className={`snap-start whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  className={`snap-start whitespace-nowrap px-4 sm:px-5 py-2.5 md:py-3 rounded-full text-sm sm:text-base font-extrabold transition-all duration-300 active:scale-95 ${
                     isActive
-                      ? "bg-gradient-to-r from-blue-800 to-blue-400 text-white shadow-md"
-                      : "bg-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                      ? "bg-gradient-to-r from-blue-800 to-blue-500 text-white shadow-md shadow-blue-500/20"
+                      : "bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/50"
                   }`}
                 >
                   {platform.label}
