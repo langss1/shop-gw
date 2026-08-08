@@ -232,7 +232,7 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               onScroll={(e) => setShowNavTitle(e.currentTarget.scrollTop > 50)}
               data-lenis-prevent
-              className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-white shadow-2xl z-[110] border-l border-slate-200 overflow-y-auto overflow-x-hidden flex flex-col text-slate-900 pb-28"
+              className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-white shadow-2xl z-[110] border-l border-slate-200 overflow-y-auto overflow-x-hidden flex flex-col text-slate-900 pb-44 md:pb-40"
             >
               {/* Top Bar */}
               <div className="flex items-center justify-between px-4 py-3 sticky top-0 bg-white/95 backdrop-blur-md z-30 border-b border-slate-100 min-h-[56px]">
@@ -546,8 +546,11 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                 </div>
               )}
 
+              {/* Bottom Scroll Spacer to prevent content cutoff */}
+              <div className="h-16 w-full shrink-0" />
+
               {/* Floating Bottom Action Bar */}
-              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-3.5 px-4 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 flex items-center gap-2.5 z-40 shadow-lg">
+              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-3.5 pb-6 md:pb-3.5 px-4 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 flex items-center gap-2.5 z-40 shadow-lg">
                 {/* Left Button: Contact to Custom App */}
                 <a
                   href="https://wa.me/6281234567890?text=Halo%20Gilang%20Store,%20saya%20ingin%20custom%20app"
