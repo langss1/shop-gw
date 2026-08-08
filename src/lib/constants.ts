@@ -49,7 +49,7 @@ export const CONTENT_RATINGS = ["3+", "7+", "12+", "16+", "18+"] as const;
  * Mengubah berbagai bentuk URL YouTube jadi URL embed.
  * Menerima watch?v=, youtu.be/, /embed/, atau ID mentah.
  */
-export function youtubeEmbedUrl(input: string | null | undefined): string | null {
+export function youtubeEmbedUrl(input: string | null | undefined, autoplay = false): string | null {
   if (!input) return null;
 
   const raw = input.trim();
@@ -73,7 +73,8 @@ export function youtubeEmbedUrl(input: string | null | undefined): string | null
   }
 
   if (!id) return null;
-  return `https://www.youtube.com/embed/${id}?autoplay=0&mute=1&controls=1&modestbranding=1&rel=0`;
+  const autoPlayParam = autoplay ? "1" : "0";
+  return `https://www.youtube.com/embed/${id}?autoplay=${autoPlayParam}&mute=1&controls=1&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
 }
 
 /** "12.4 MB" untuk ditampilkan di panel detail. */

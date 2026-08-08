@@ -28,6 +28,42 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   const [isAboutExpanded, setIsAboutExpanded] = useState(true);
   const [pendingDownloadApp, setPendingDownloadApp] = useState<AppWithRelations | null>(null);
   const [hasAgreedTerms, setHasAgreedTerms] = useState(true);
+  const [activePlayingAppId, setActivePlayingAppId] = useState<string | null>(
+    apps.length > 0 ? apps[0].id : null
+  );
+
+  // IntersectionObserver to auto-play ONLY the video card currently visible in viewport as user scrolls
+  useEffect(() => {
+    if (typeof window === "undefined" || apps.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let maxRatio = 0;
+        let mostVisibleAppId: string | null = null;
+
+        entries.forEach((entry) => {
+          const appId = entry.target.getAttribute("data-app-id");
+          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+            maxRatio = entry.intersectionRatio;
+            mostVisibleAppId = appId;
+          }
+        });
+
+        if (mostVisibleAppId && maxRatio >= 0.3) {
+          setActivePlayingAppId(mostVisibleAppId);
+        }
+      },
+      {
+        threshold: [0.2, 0.4, 0.6, 0.8, 1.0],
+        rootMargin: "-10% 0px -10% 0px",
+      }
+    );
+
+    const cardElements = document.querySelectorAll("[data-app-id]");
+    cardElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [apps]);
 
   useEffect(() => {
     if (selectedApp) {
@@ -57,10 +93,12 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
               className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 w-full"
             >
               {apps.map((app, index) => {
-                const embedUrl = youtubeEmbedUrl(app.video_url);
+                const isPlaying = activePlayingAppId === app.id;
+                const embedUrl = youtubeEmbedUrl(app.video_url, isPlaying);
 
                 return (
                   <motion.div
+                    data-app-id={app.id}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
