@@ -1,14 +1,33 @@
 "use client";
 import { Search, MonitorSmartphone } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 
-const TABS = ["mobile", "web", "cli", "skills-ai"];
+import { PLATFORMS } from "@/lib/constants";
+import type { Banner, Platform } from "@/lib/types";
 
-export default function MobileHeader() {
-  const [activeTab, setActiveTab] = useState("mobile");
-  
+/** Banner cadangan kalau tabel `banners` masih kosong. */
+const FALLBACK_BANNER: Banner = {
+  id: "fallback",
+  image_url: null,
+  link_url: null,
+  gradient: "from-blue-600 via-indigo-600 to-purple-700",
+  sort_order: 0,
+  is_active: true,
+};
+
+export default function MobileHeader({
+  banners,
+  activePlatform,
+  onPlatformChange,
+}: {
+  banners: Banner[];
+  activePlatform: Platform;
+  onPlatformChange: (platform: Platform) => void;
+}) {
+  const slides = banners.length > 0 ? banners : [FALLBACK_BANNER];
+  const [slideIndex, setSlideIndex] = useState(0);
+
   // Scroll detection for sticky header
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,15 +41,51 @@ export default function MobileHeader() {
     }
   });
 
+  // Auto-rotate carousel
+  useEffect(() => {
+    if (slides.length < 2) return;
+    const timer = setInterval(() => {
+      setSlideIndex((current) => (current + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const banner = slides[Math.min(slideIndex, slides.length - 1)];
+
+  const bannerBody = (
+    <>
+      {/* Background: gambar dari admin, atau gradient sebagai fallback */}
+      {banner.image_url ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={banner.image_url}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        <>
+          <div className={`absolute inset-0 bg-gradient-to-br ${banner.gradient}`} />
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-white/20 blur-2xl" />
+        </>
+      )}
+
+      {/* Indikator asli, mengikuti jumlah banner aktif */}
+      <div className="absolute bottom-4 right-4 px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-white text-xs font-medium">
+        {slideIndex + 1}/{slides.length}
+      </div>
+    </>
+  );
+
   return (
     <>
-      <div className="w-full bg-white text-slate-900 pt-6 px-3 md:px-6">
+      <div className="w-full max-w-6xl mx-auto bg-white text-slate-900 pt-6 px-3 md:px-6">
         {/* Top Bar: Logo & Search */}
         <div className="flex items-center justify-between mb-6">
           <div className="relative h-8 md:h-10 flex items-center justify-start">
-            <img 
-              src="/logo1.png" 
-              alt="Store Logo" 
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo1.png"
+              alt="Store Logo"
               className="h-full w-auto object-contain max-w-[150px]"
             />
           </div>
@@ -39,57 +94,69 @@ export default function MobileHeader() {
           </button>
         </div>
 
-        {/* Featured Banner (Like Warhammer in the screenshot) */}
-        <div className="relative w-full h-[200px] md:h-[300px] rounded-3xl overflow-hidden mb-8 shadow-sm group cursor-pointer">
-          {/* Placeholder Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700" />
-          
-          {/* Abstract shapes for aesthetics */}
-          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-white/20 blur-2xl" />
-          
-          <div className="absolute inset-0 p-6 flex flex-col justify-center">
+        {/* Featured Banner Carousel */}
+        <div className="relative w-full h-[200px] md:h-[300px] rounded-3xl overflow-hidden mb-8 shadow-sm group">
+          <AnimatePresence mode="wait">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              key={banner.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
             >
-              <h2 className="text-white text-2xl md:text-4xl font-bold mb-2 drop-shadow-md">
-                Featured Application
-              </h2>
-              <p className="text-white/90 text-sm md:text-base max-w-[70%] drop-shadow-sm">
-                Discover the most powerful tools to accelerate your workflow.
-              </p>
+              {banner.link_url ? (
+                <a href={banner.link_url} className="absolute inset-0 block cursor-pointer">
+                  {bannerBody}
+                </a>
+              ) : (
+                <div className="absolute inset-0">{bannerBody}</div>
+              )}
             </motion.div>
-          </div>
+          </AnimatePresence>
 
-          {/* Indicator (like 3/4 in screenshot) */}
-          <div className="absolute bottom-4 right-4 px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-white text-xs font-medium">
-            1/4
-          </div>
+          {/* Dots navigasi */}
+          {slides.length > 1 && (
+            <div className="absolute bottom-4 left-4 z-10 flex items-center gap-1.5">
+              {slides.map((slide, i) => (
+                <button
+                  key={slide.id}
+                  onClick={() => setSlideIndex(i)}
+                  aria-label={`Banner ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === slideIndex ? "w-5 bg-white" : "w-1.5 bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Tabs Menu */}
-        <div className="flex items-center border-b border-slate-200 pb-5 w-full">
+        <div className="-mx-3 md:-mx-6 px-3 md:px-6 border-b border-slate-200 pb-5 w-full flex items-center">
           {/* Devices Icon on the far left */}
           <div className="pr-4 pl-2 mr-2 border-r border-slate-200 flex-shrink-0">
             <MonitorSmartphone className="w-5 h-5 text-slate-600" />
           </div>
 
           {/* Scrollable Tabs Container */}
-          <div className="flex-1 flex items-center justify-start md:justify-center gap-2 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {TABS.map((tab) => {
-              const isActive = activeTab === tab;
+          <div
+            className="flex-1 flex items-center justify-start md:justify-center gap-2 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {PLATFORMS.map((platform) => {
+              const isActive = activePlatform === platform.id;
               return (
                 <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  key={platform.id}
+                  onClick={() => onPlatformChange(platform.id)}
                   className={`snap-start whitespace-nowrap px-3 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-                    isActive 
-                      ? "bg-gradient-to-r from-blue-800 to-blue-400 text-white shadow-md" 
+                    isActive
+                      ? "bg-gradient-to-r from-blue-800 to-blue-400 text-white shadow-md"
                       : "bg-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {platform.label}
                 </button>
               );
             })}
@@ -108,9 +175,10 @@ export default function MobileHeader() {
             className="fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-2 rounded-full bg-white/80 backdrop-blur-xl border border-slate-200 shadow-md"
           >
             <div className="relative h-6 md:h-7 flex items-center justify-start">
-              <img 
-                src="/logo.png" 
-                alt="Store Logo" 
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.png"
+                alt="Store Logo"
                 className="h-full w-auto object-contain max-w-[100px]"
               />
             </div>
