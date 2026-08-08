@@ -287,21 +287,9 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: -10 }}
                             transition={{ duration: 0.15 }}
-                            className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-slate-200/80 p-1.5 z-50 text-xs font-semibold text-slate-700 space-y-0.5"
+                            className="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-200/80 p-1.5 z-50 text-xs font-semibold text-slate-700"
                           >
-                            {/* Option 1: Share Link */}
-                            <button
-                              onClick={() => {
-                                setIsMoreMenuOpen(false);
-                                handleShare(selectedApp);
-                              }}
-                              className="w-full px-3 py-2.5 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 transition-colors text-left text-slate-700"
-                            >
-                              <Copy className="w-4 h-4 text-slate-500 shrink-0" />
-                              <span>Bagikan Tautan App</span>
-                            </button>
-
-                            {/* Option 2: Report App */}
+                            {/* Option: Report App */}
                             <a
                               href={`https://wa.me/6281234567890?text=Halo%20Gilang%20Store,%20saya%20ingin%20melaporkan%20masalah/bug%20pada%20aplikasi%20${encodeURIComponent(
                                 selectedApp.name
@@ -314,12 +302,6 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                               <Flag className="w-4 h-4 text-rose-500 shrink-0" />
                               <span>Laporkan Aplikasi</span>
                             </a>
-
-                            {/* Option 3: Verification Info */}
-                            <div className="px-3 py-2 text-[10px] text-slate-400 border-t border-slate-100 flex items-center gap-1.5 mt-1 pt-1.5">
-                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                              <span>Terverifikasi Gilang Store</span>
-                            </div>
                           </motion.div>
                         </>
                       )}
