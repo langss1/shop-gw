@@ -31,6 +31,7 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   const [activePlayingAppId, setActivePlayingAppId] = useState<string | null>(
     apps.length > 0 ? apps[0].id : null
   );
+  const [shareFeedback, setShareFeedback] = useState(false);
 
   // IntersectionObserver to auto-play ONLY the video card currently visible in viewport as user scrolls
   useEffect(() => {
@@ -77,6 +78,32 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   }, [selectedApp]);
 
   const closePanel = () => setSelectedApp(null);
+
+  const handleShare = async (app: AppWithRelations) => {
+    const shareUrl = `${window.location.origin}${window.location.pathname}?app=${app.slug}`;
+    const shareData = {
+      title: app.name,
+      text: app.tagline ?? `Cek ${app.name} di sini`,
+      url: shareUrl,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        // pengguna membatalkan share sheet — tidak perlu tindakan
+      }
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShareFeedback(true);
+      setTimeout(() => setShareFeedback(false), 2000);
+    } catch {
+      // clipboard tidak tersedia — tidak ada fallback lain
+    }
+  };
 
   const selectedSize = selectedApp ? formatBytes(selectedApp.download_size_bytes) : null;
 
@@ -212,9 +239,27 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <div className="flex items-center gap-1 text-slate-700">
-                  <button className="p-2 hover:bg-slate-100 rounded-full transition-colors active:scale-95">
-                    <Share2 className="w-5 h-5 text-slate-600" />
-                  </button>
+                  <div className="relative">
+                    <button
+                      onClick={() => handleShare(selectedApp)}
+                      className="p-2 hover:bg-slate-100 rounded-full transition-colors active:scale-95"
+                      aria-label="Bagikan app"
+                    >
+                      <Share2 className="w-5 h-5 text-slate-600" />
+                    </button>
+                    <AnimatePresence>
+                      {shareFeedback && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0 }}
+                          className="absolute top-full right-0 mt-1 whitespace-nowrap px-2.5 py-1 rounded-lg bg-slate-900 text-white text-xs font-medium shadow-lg z-10"
+                        >
+                          Link disalin!
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   <button className="p-2 hover:bg-slate-100 rounded-full transition-colors active:scale-95">
                     <MoreVertical className="w-5 h-5 text-slate-600" />
                   </button>
@@ -228,11 +273,11 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   {selectedApp.name}
                 </h1>
 
-                {/* Fixed Icon + Compact Metrics Row */}
-                <div className="flex items-center gap-3">
-                  {/* Fixed App Icon */}
+                {/* Ultra-Compact Icon + Metrics Row */}
+                <div className="flex items-center gap-2.5">
+                  {/* Compact App Icon */}
                   <div
-                    className={`w-16 h-16 md:w-20 md:h-20 rounded-[18px] md:rounded-[20px] overflow-hidden flex items-center justify-center text-white text-3xl font-extrabold shadow-sm shrink-0 border border-slate-100 bg-gradient-to-br ${selectedApp.gradient}`}
+                    className={`w-14 h-14 md:w-16 md:h-16 rounded-[16px] overflow-hidden flex items-center justify-center text-white text-2xl font-extrabold shadow-xs shrink-0 border border-slate-100 bg-gradient-to-br ${selectedApp.gradient}`}
                   >
                     {selectedApp.icon_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
@@ -247,41 +292,41 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   </div>
 
                   {/* Vertical Divider */}
-                  <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
+                  <div className="w-[1px] h-7 bg-slate-200 shrink-0" />
 
-                  {/* Compact Metrics Container */}
-                  <div className="flex-1 flex items-center gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x pb-1 min-w-0">
+                  {/* Ultra-Compact Metrics Container */}
+                  <div className="flex-1 flex items-center justify-around gap-1.5 min-w-0">
                     {/* 1. Age Rating */}
                     <div className="flex flex-col items-center justify-center shrink-0">
-                      <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[11px] px-1.5 py-0.5 rounded-md leading-none">
+                      <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[10px] px-1 py-0.5 rounded-md leading-none">
                         {selectedApp.content_rating || "12+"}
                       </div>
-                      <div className="flex items-center gap-0.5 text-[10px] font-medium text-slate-500 mt-1 whitespace-nowrap">
+                      <div className="flex items-center gap-0.5 text-[9px] font-medium text-slate-500 mt-1 whitespace-nowrap">
                         <span>Rated for {selectedApp.content_rating || "12+"}</span>
                         <Info className="w-2.5 h-2.5 text-slate-500" />
                       </div>
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-[1px] h-8 bg-slate-200/80 shrink-0" />
+                    <div className="w-[1px] h-7 bg-slate-200/80 shrink-0" />
 
                     {/* 2. Download Size */}
                     <div className="flex flex-col items-center justify-center shrink-0">
-                      <Download className="w-4 h-4 text-slate-900 stroke-[2.5]" />
-                      <span className="text-[10px] font-extrabold text-slate-900 mt-1 leading-tight whitespace-nowrap">
+                      <Download className="w-3.5 h-3.5 text-slate-900 stroke-[2.5]" />
+                      <span className="text-[10px] font-extrabold text-slate-900 mt-0.5 leading-tight whitespace-nowrap">
                         {selectedSize || "24 MB"}
                       </span>
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-[1px] h-8 bg-slate-200/80 shrink-0" />
+                    <div className="w-[1px] h-7 bg-slate-200/80 shrink-0" />
 
                     {/* 3. Downloads Count */}
                     <div className="flex flex-col items-center justify-center shrink-0">
-                      <span className="font-extrabold text-slate-900 text-sm leading-tight whitespace-nowrap">
+                      <span className="font-extrabold text-slate-900 text-xs leading-tight whitespace-nowrap">
                         {selectedApp.download_count > 0 ? `${selectedApp.download_count}+` : "1K+"}
                       </span>
-                      <span className="text-[10px] font-medium text-slate-500 mt-1 whitespace-nowrap">Downloads</span>
+                      <span className="text-[9px] font-medium text-slate-500 mt-0.5 whitespace-nowrap">Downloads</span>
                     </div>
                   </div>
                 </div>
