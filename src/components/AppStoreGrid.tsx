@@ -251,18 +251,6 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
                   {/* Scrollable Metrics Container */}
                   <div className="flex-1 flex items-center gap-5 overflow-x-auto scrollbar-hide snap-x pb-1 min-w-0">
-                    {/* 1. Rating */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[60px]">
-                      <div className="flex items-center gap-1 font-black text-slate-900 text-sm">
-                        <span>{selectedApp.rating || "4.5"}</span>
-                        <Star className="w-3.5 h-3.5 fill-slate-900 text-slate-900" />
-                      </div>
-                      <span className="text-[10px] font-medium text-slate-500 mt-1">Rating</span>
-                    </div>
-
-                    {/* Vertical Divider */}
-                    <div className="w-[1px] h-9 bg-slate-200/80 shrink-0" />
-
                     {/* 2. Age Rating */}
                     <div className="flex flex-col items-center justify-center shrink-0 min-w-[75px]">
                       <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[11px] px-1.5 py-0.5 rounded-md leading-none">
