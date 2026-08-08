@@ -444,18 +444,13 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
             >
               {/* Header Row */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100/50">
-                    <ShieldCheck className="w-5 h-5 stroke-[2.2]" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-extrabold text-slate-900 leading-tight">
-                      Confirm Installation
-                    </h3>
-                    <p className="text-[11px] font-medium text-slate-400">
-                      Official Verified Package
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="text-base font-extrabold text-slate-900 leading-tight">
+                    Confirm Installation
+                  </h3>
+                  <p className="text-[11px] font-medium text-slate-400">
+                    Official Verified Package
+                  </p>
                 </div>
                 <button
                   onClick={() => setPendingDownloadApp(null)}
