@@ -12,6 +12,8 @@ import {
   Share2,
   CheckCircle2,
   MessageSquare,
+  Info,
+  HardDrive,
 } from "lucide-react";
 
 import { formatBytes, youtubeEmbedUrl } from "@/lib/constants";
@@ -202,49 +204,54 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                   <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
 
                   {/* Scrollable Metrics Container */}
-                  <div className="flex-1 flex items-center gap-4 md:gap-5 overflow-x-auto scrollbar-hide snap-x pb-1 min-w-0">
-                    {/* Rating */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[55px]">
-                      <div className="flex items-center gap-1 font-extrabold text-slate-900 text-sm">
-                        <span>{selectedApp.rating || "4.5"}</span>
-                        <Star className="w-3.5 h-3.5 fill-slate-800 text-slate-800" />
-                      </div>
-                      <span className="text-[10px] font-medium text-slate-500 mt-1">Rating</span>
-                    </div>
-
-                    {/* Vertical Divider */}
-                    <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
-
-                    {/* Age Rating */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[70px]">
-                      <span className="border border-slate-800 text-slate-900 font-extrabold text-[10px] px-1.5 py-0.5 rounded leading-none">
-                        {selectedApp.content_rating || "12+"}
-                      </span>
-                      <span className="text-[10px] font-medium text-slate-500 mt-1">
-                        Rated for {selectedApp.content_rating || "12+"}
-                      </span>
-                    </div>
-
-                    {/* Vertical Divider */}
-                    <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
-
-                    {/* Download Size */}
+                  <div className="flex-1 flex items-center gap-5 overflow-x-auto scrollbar-hide snap-x pb-1 min-w-0">
+                    {/* 1. Rating */}
                     <div className="flex flex-col items-center justify-center shrink-0 min-w-[60px]">
-                      <Download className="w-4 h-4 text-slate-800 stroke-[2.5]" />
-                      <span className="text-[10px] font-extrabold text-slate-900 mt-1">
+                      <div className="flex items-center gap-1 font-black text-slate-900 text-sm">
+                        <span>{selectedApp.rating || "4.5"}</span>
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      </div>
+                      <span className="text-[10px] font-medium text-slate-400 mt-1">Rating</span>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div className="w-[1px] h-9 bg-slate-200/80 shrink-0" />
+
+                    {/* 2. Age Rating */}
+                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[75px]">
+                      <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[11px] px-1.5 py-0.5 rounded-md leading-none bg-slate-50">
+                        {selectedApp.content_rating || "12+"}
+                      </div>
+                      <div className="flex items-center gap-0.5 text-[10px] font-medium text-slate-500 mt-1">
+                        <span>Rated for {selectedApp.content_rating || "12+"}</span>
+                        <Info className="w-2.5 h-2.5 text-slate-400" />
+                      </div>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div className="w-[1px] h-9 bg-slate-200/80 shrink-0" />
+
+                    {/* 3. Download Size */}
+                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[65px]">
+                      <div className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-0.5">
+                        <HardDrive className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </div>
+                      <span className="text-[11px] font-extrabold text-slate-900 leading-tight">
                         {selectedSize || "24 MB"}
                       </span>
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-[1px] h-9 bg-slate-200 shrink-0" />
+                    <div className="w-[1px] h-9 bg-slate-200/80 shrink-0" />
 
-                    {/* Downloads Count */}
-                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[65px]">
-                      <span className="font-extrabold text-slate-900 text-sm">
+                    {/* 4. Downloads Count */}
+                    <div className="flex flex-col items-center justify-center shrink-0 min-w-[70px]">
+                      <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
+                        <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </div>
+                      <span className="font-extrabold text-slate-900 text-xs leading-tight">
                         {selectedApp.download_count > 0 ? `${selectedApp.download_count}+` : "1K+"}
                       </span>
-                      <span className="text-[10px] font-medium text-slate-500 mt-1">Downloads</span>
                     </div>
                   </div>
                 </div>
