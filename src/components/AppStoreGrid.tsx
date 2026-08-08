@@ -182,11 +182,11 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                         </div>
 
                         {/* Info */}
-                        <div className="flex flex-col">
-                          <h4 className="text-sm md:text-base font-bold line-clamp-1">
+                        <div className="flex flex-col min-w-0">
+                          <h4 className="text-base md:text-lg font-extrabold text-slate-900 line-clamp-1 leading-tight">
                             {app.name}
                           </h4>
-                          <p className="text-[10px] md:text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                          <p className="text-xs md:text-sm text-slate-500 font-medium mt-0.5 line-clamp-2 leading-snug">
                             {app.tagline || app.description}
                           </p>
                         </div>
