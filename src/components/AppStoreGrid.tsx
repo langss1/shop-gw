@@ -196,23 +196,13 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
                   {/* App Title & Info */}
                   <div className="flex flex-col flex-1 pt-0.5 min-w-0">
-                    <h1 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight mb-1 tracking-tight truncate">
+                    <h1 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight mb-1.5 tracking-tight truncate">
                       {selectedApp.name}
                     </h1>
 
-                    {/* Developer Name with Verified Badge */}
-                    <p className="text-sm font-semibold text-blue-600 mb-1 flex items-center gap-1">
-                      <span className="truncate">
-                        {selectedApp.developer && selectedApp.developer.length > 0
-                          ? selectedApp.developer.join(", ")
-                          : "Gilang Store"}
-                      </span>
-                      <CheckCircle2 className="w-4 h-4 fill-blue-600 text-white shrink-0" />
-                    </p>
-
-                    {/* Category & Tagline */}
-                    <p className="text-xs text-slate-500 line-clamp-1 mb-2 font-medium">
-                      {selectedApp.tagline || selectedApp.category}
+                    {/* Description */}
+                    <p className="text-xs text-slate-500 line-clamp-2 mb-2 font-medium leading-relaxed">
+                      {selectedApp.description || selectedApp.tagline || selectedApp.category}
                     </p>
 
                     {/* In-App Purchases Tag */}
