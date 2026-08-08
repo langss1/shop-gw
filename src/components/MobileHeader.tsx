@@ -88,7 +88,7 @@ export default function MobileHeader({
 
   return (
     <>
-      <div className="w-full max-w-6xl mx-auto bg-white text-slate-900 pt-6 px-3 md:px-6">
+      <div className="w-full max-w-7xl mx-auto bg-white text-slate-900 pt-6 px-4 md:px-8 lg:px-12">
         {/* Top Bar: Logo & Search */}
         <div className="flex items-center justify-between mb-6 gap-2">
           {isSearchOpen ? (

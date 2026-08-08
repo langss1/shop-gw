@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <SmoothScroll>
-      <main className="min-h-screen flex flex-col bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20 relative">
+      <main className="min-h-screen flex flex-col bg-white selection:bg-blue-100 selection:text-blue-900 w-full relative">
         <Storefront apps={apps} banners={banners} />
         <Footer />
       </main>

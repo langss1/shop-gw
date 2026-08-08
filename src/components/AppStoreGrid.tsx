@@ -114,14 +114,14 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   return (
     <>
       <section className="pt-10 pb-6 md:pt-12 md:pb-8 bg-white relative z-10" id="store">
-        <div className="w-full max-w-6xl mx-auto px-3 md:px-6">
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
           {/* App Grid */}
           <div className="min-h-[400px]">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 w-full"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 w-full"
             >
               {apps.map((app, index) => {
                 const isPlaying = activePlayingAppId === app.id;
