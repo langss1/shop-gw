@@ -1,5 +1,5 @@
 "use client";
-import { Search, MonitorSmartphone } from "lucide-react";
+import { Search, MonitorSmartphone, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 
@@ -20,13 +20,23 @@ export default function MobileHeader({
   banners,
   activePlatform,
   onPlatformChange,
+  searchQuery,
+  onSearchChange,
 }: {
   banners: Banner[];
   activePlatform: Platform;
   onPlatformChange: (platform: Platform) => void;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
 }) {
   const slides = banners.length > 0 ? banners : [FALLBACK_BANNER];
   const [slideIndex, setSlideIndex] = useState(0);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    onSearchChange("");
+  };
 
   // Scroll detection for sticky header
   const { scrollY } = useScroll();
@@ -80,18 +90,47 @@ export default function MobileHeader({
     <>
       <div className="w-full max-w-6xl mx-auto bg-white text-slate-900 pt-6 px-3 md:px-6">
         {/* Top Bar: Logo & Search */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="relative h-8 md:h-10 flex items-center justify-start">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo1.png"
-              alt="Store Logo"
-              className="h-full w-auto object-contain max-w-[150px]"
-            />
-          </div>
-          <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-            <Search className="w-6 h-6 text-slate-800" />
-          </button>
+        <div className="flex items-center justify-between mb-6 gap-2">
+          {isSearchOpen ? (
+            <div className="flex items-center gap-2 w-full">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  autoFocus
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => onSearchChange(e.target.value)}
+                  placeholder="Cari app..."
+                  className="w-full pl-9 pr-3 py-2 rounded-full bg-slate-100 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <button
+                onClick={closeSearch}
+                aria-label="Tutup pencarian"
+                className="p-2 hover:bg-slate-100 rounded-full transition-colors flex-shrink-0"
+              >
+                <X className="w-5 h-5 text-slate-800" />
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="relative h-8 md:h-10 flex items-center justify-start">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logo1.png"
+                  alt="Store Logo"
+                  className="h-full w-auto object-contain max-w-[150px]"
+                />
+              </div>
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                aria-label="Cari app"
+                className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+              >
+                <Search className="w-6 h-6 text-slate-800" />
+              </button>
+            </>
+          )}
         </div>
 
         {/* Featured Banner Carousel */}
@@ -133,17 +172,16 @@ export default function MobileHeader({
         </div>
 
         {/* Tabs Menu */}
-        <div className="-mx-3 md:-mx-6 px-3 md:px-6 border-b border-slate-200 pb-5 w-full flex items-center">
-          {/* Devices Icon on the far left */}
-          <div className="pr-4 pl-2 mr-2 border-r border-slate-200 flex-shrink-0">
-            <MonitorSmartphone className="w-5 h-5 text-slate-600" />
-          </div>
-
-          {/* Scrollable Tabs Container */}
+        <div className="-mx-3 md:-mx-6 px-3 md:px-6 border-b border-slate-200 pb-5 w-full flex items-center justify-center">
           <div
-            className="flex-1 flex items-center justify-start md:justify-center gap-2 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1"
+            className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x px-1 max-w-full"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
+            {/* Devices Icon */}
+            <div className="pr-2.5 mr-0.5 border-r border-slate-200 flex-shrink-0 flex items-center">
+              <MonitorSmartphone className="w-5 h-5 text-slate-600" />
+            </div>
+
             {PLATFORMS.map((platform) => {
               const isActive = activePlatform === platform.id;
               return (
@@ -184,9 +222,12 @@ export default function MobileHeader({
             </div>
             <div className="w-[1px] h-4 bg-slate-300 rounded-full" />
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                setIsSearchOpen(true);
+              }}
               className="p-1 hover:bg-slate-100 rounded-full transition-colors text-slate-800"
-              aria-label="Search"
+              aria-label="Cari app"
             >
               <Search className="w-5 h-5 stroke-[2.5]" />
             </button>
