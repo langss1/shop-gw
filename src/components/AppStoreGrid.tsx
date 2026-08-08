@@ -14,6 +14,7 @@ import {
   MessageSquare,
   Info,
   HardDrive,
+  ChevronRight,
 } from "lucide-react";
 
 import { formatBytes, youtubeEmbedUrl } from "@/lib/constants";
@@ -21,6 +22,7 @@ import type { AppWithRelations } from "@/lib/types";
 
 export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   const [selectedApp, setSelectedApp] = useState<AppWithRelations | null>(null);
+  const [isAboutExpanded, setIsAboutExpanded] = useState(true);
 
   useEffect(() => {
     if (selectedApp) {
@@ -309,36 +311,59 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
               {/* About This App / Description Section */}
               <div className="px-5 my-3">
-                <div className="flex items-center justify-between mb-2">
+                <div
+                  onClick={() => setIsAboutExpanded(!isAboutExpanded)}
+                  className="flex items-center justify-between py-1 cursor-pointer select-none group"
+                >
                   <h3 className="text-sm font-bold text-slate-900 tracking-tight">About this app</h3>
+                  <div className="p-1 rounded-full group-hover:bg-slate-100 transition-colors">
+                    <ChevronRight
+                      className={`w-4 h-4 text-slate-600 transition-transform duration-200 ${
+                        isAboutExpanded ? "rotate-90" : "rotate-0"
+                      }`}
+                    />
+                  </div>
                 </div>
-                <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
-                  {selectedApp.description}
-                </p>
 
-                {/* Info Metadata Grid */}
-                <div className="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-100 grid grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <span className="text-slate-400 block font-medium">Version</span>
-                    <span className="text-slate-800 font-semibold">{selectedApp.version || "1.0.0"}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block font-medium">Platform</span>
-                    <span className="text-slate-800 font-semibold capitalize">{selectedApp.platform || "Web & Mobile"}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block font-medium">Released</span>
-                    <span className="text-slate-800 font-semibold">{selectedApp.year || "2026"}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block font-medium">Developer</span>
-                    <span className="text-slate-800 font-semibold truncate block">
-                      {selectedApp.developer && selectedApp.developer.length > 0
-                        ? selectedApp.developer[0]
-                        : "Gilang Store"}
-                    </span>
-                  </div>
-                </div>
+                <AnimatePresence initial={false}>
+                  {isAboutExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                      className="overflow-hidden pt-1"
+                    >
+                      <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                        {selectedApp.description}
+                      </p>
+
+                      {/* Info Metadata Grid */}
+                      <div className="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-100 grid grid-cols-2 gap-3 text-xs">
+                        <div>
+                          <span className="text-slate-400 block font-medium">Version</span>
+                          <span className="text-slate-800 font-semibold">{selectedApp.version || "1.0.0"}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-400 block font-medium">Platform</span>
+                          <span className="text-slate-800 font-semibold capitalize">{selectedApp.platform || "Web & Mobile"}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-400 block font-medium">Released</span>
+                          <span className="text-slate-800 font-semibold">{selectedApp.year || "2026"}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-400 block font-medium">Developer</span>
+                          <span className="text-slate-800 font-semibold truncate block">
+                            {selectedApp.developer && selectedApp.developer.length > 0
+                              ? selectedApp.developer[0]
+                              : "Gilang Store"}
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Links & Extra Resources */}
