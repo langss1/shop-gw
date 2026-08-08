@@ -35,6 +35,7 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
   );
   const [shareFeedback, setShareFeedback] = useState(false);
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
+  const [showNavTitle, setShowNavTitle] = useState(false);
 
   // IntersectionObserver to auto-play ONLY the video card currently visible in viewport as user scrolls
   useEffect(() => {
@@ -229,19 +230,37 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              onScroll={(e) => setShowNavTitle(e.currentTarget.scrollTop > 50)}
               data-lenis-prevent
               className="fixed top-0 right-0 w-full md:w-[500px] h-full h-screen bg-white shadow-2xl z-[110] border-l border-slate-200 overflow-y-auto overflow-x-hidden flex flex-col text-slate-900 pb-28"
             >
               {/* Top Bar */}
-              <div className="flex items-center justify-between px-4 py-3 sticky top-0 bg-white/90 backdrop-blur-md z-30 border-b border-slate-100">
-                <button
-                  onClick={closePanel}
-                  className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-700 active:scale-95"
-                  aria-label="Back"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                <div className="flex items-center gap-1 text-slate-700">
+              <div className="flex items-center justify-between px-4 py-3 sticky top-0 bg-white/95 backdrop-blur-md z-30 border-b border-slate-100 min-h-[56px]">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1 pr-2">
+                  <button
+                    onClick={closePanel}
+                    className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-700 active:scale-95 shrink-0"
+                    aria-label="Back"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+
+                  <AnimatePresence>
+                    {showNavTitle && (
+                      <motion.h2
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -8 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-base font-extrabold text-slate-900 truncate tracking-tight"
+                      >
+                        {selectedApp.name}
+                      </motion.h2>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <div className="flex items-center gap-1 text-slate-700 shrink-0">
                   <div className="relative">
                     <button
                       onClick={() => handleShare(selectedApp)}
