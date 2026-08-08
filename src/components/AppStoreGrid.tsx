@@ -416,10 +416,23 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                 </div>
               </div>
 
-              {/* Screenshots Showcase */}
+              {/* Screenshots Showcase / App Previews */}
               <div className="px-5 my-4">
                 <h3 className="text-sm font-bold text-slate-900 mb-3 tracking-tight">App Previews</h3>
                 <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide snap-x pb-2 -mx-5 px-5">
+                  {/* YouTube Video Preview Card as 1st Item (Play Store Style) */}
+                  {youtubeEmbedUrl(selectedApp.video_url, true) && (
+                    <div className="snap-start shrink-0 w-[240px] h-[140px] rounded-2xl overflow-hidden relative border border-slate-200 shadow-sm bg-slate-900 group">
+                      <iframe
+                        src={youtubeEmbedUrl(selectedApp.video_url, true)!}
+                        title={`${selectedApp.name} Video Preview`}
+                        className="w-full h-full object-cover border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  )}
+
                   {selectedApp.app_screenshots.length > 0
                     ? selectedApp.app_screenshots.map((shot) => (
                         <div
