@@ -452,13 +452,6 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                     Official Verified Package
                   </p>
                 </div>
-                <button
-                  onClick={() => setPendingDownloadApp(null)}
-                  className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors active:scale-95"
-                  aria-label="Close"
-                >
-                  <X className="w-5 h-5" />
-                </button>
               </div>
 
               {/* App Hero Box */}
