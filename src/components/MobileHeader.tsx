@@ -177,7 +177,7 @@ export default function MobileHeader({
             <div className="relative h-6 flex items-center justify-start">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo1.png"
+                src="/logo.png"
                 alt="Store Logo"
                 className="h-full w-auto object-contain max-w-[110px]"
               />
