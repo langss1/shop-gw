@@ -209,9 +209,9 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                     <div className="flex flex-col items-center justify-center shrink-0 min-w-[60px]">
                       <div className="flex items-center gap-1 font-black text-slate-900 text-sm">
                         <span>{selectedApp.rating || "4.5"}</span>
-                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <Star className="w-3.5 h-3.5 fill-slate-900 text-slate-900" />
                       </div>
-                      <span className="text-[10px] font-medium text-slate-400 mt-1">Rating</span>
+                      <span className="text-[10px] font-medium text-slate-500 mt-1">Rating</span>
                     </div>
 
                     {/* Vertical Divider */}
@@ -219,12 +219,12 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
                     {/* 2. Age Rating */}
                     <div className="flex flex-col items-center justify-center shrink-0 min-w-[75px]">
-                      <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[11px] px-1.5 py-0.5 rounded-md leading-none bg-slate-50">
+                      <div className="border-[1.5px] border-slate-900 text-slate-900 font-black text-[11px] px-1.5 py-0.5 rounded-md leading-none">
                         {selectedApp.content_rating || "12+"}
                       </div>
                       <div className="flex items-center gap-0.5 text-[10px] font-medium text-slate-500 mt-1">
                         <span>Rated for {selectedApp.content_rating || "12+"}</span>
-                        <Info className="w-2.5 h-2.5 text-slate-400" />
+                        <Info className="w-2.5 h-2.5 text-slate-500" />
                       </div>
                     </div>
 
@@ -233,10 +233,8 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
                     {/* 3. Download Size */}
                     <div className="flex flex-col items-center justify-center shrink-0 min-w-[65px]">
-                      <div className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-0.5">
-                        <HardDrive className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </div>
-                      <span className="text-[11px] font-extrabold text-slate-900 leading-tight">
+                      <Download className="w-4 h-4 text-slate-900 stroke-[2.5]" />
+                      <span className="text-[10px] font-extrabold text-slate-900 mt-1 leading-tight">
                         {selectedSize || "24 MB"}
                       </span>
                     </div>
@@ -246,12 +244,10 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
                     {/* 4. Downloads Count */}
                     <div className="flex flex-col items-center justify-center shrink-0 min-w-[70px]">
-                      <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
-                        <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </div>
-                      <span className="font-extrabold text-slate-900 text-xs leading-tight">
+                      <span className="font-extrabold text-slate-900 text-sm leading-tight">
                         {selectedApp.download_count > 0 ? `${selectedApp.download_count}+` : "1K+"}
                       </span>
+                      <span className="text-[10px] font-medium text-slate-500 mt-1">Downloads</span>
                     </div>
                   </div>
                 </div>
