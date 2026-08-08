@@ -397,7 +397,10 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
 
               {/* Tags / Tech Stack Row */}
               <div className="px-5 my-3">
-                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide snap-x pb-1 -mx-5 px-5">
+                <div
+                  className="flex items-center gap-2 overflow-x-auto scrollbar-hide snap-x pb-1 -mx-5 px-5 [&::-webkit-scrollbar]:hidden"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
                   <span className="snap-start shrink-0 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-100">
                     {selectedApp.category}
                   </span>
@@ -420,7 +423,10 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
               {/* Screenshots Showcase / App Previews */}
               <div className="px-5 my-4">
                 <h3 className="text-sm font-bold text-slate-900 mb-3 tracking-tight">App Previews</h3>
-                <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide snap-x pb-2 -mx-5 px-5">
+                <div
+                  className="flex items-center gap-3 overflow-x-auto scrollbar-hide snap-x pb-2 -mx-5 px-5 [&::-webkit-scrollbar]:hidden"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
                   {/* YouTube Video Preview Card as 1st Item (Play Store Style) */}
                   {youtubeEmbedUrl(selectedApp.video_url, true) && (
                     <div className="snap-start shrink-0 w-[240px] h-[140px] rounded-2xl overflow-hidden relative border border-slate-200 shadow-sm bg-slate-900 group">
