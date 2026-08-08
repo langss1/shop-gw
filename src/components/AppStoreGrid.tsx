@@ -11,6 +11,7 @@ import {
   Star,
   Share2,
   CheckCircle2,
+  MessageSquare,
 } from "lucide-react";
 
 import { formatBytes, youtubeEmbedUrl } from "@/lib/constants";
@@ -363,13 +364,25 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
               )}
 
               {/* Floating Bottom Action Bar */}
-              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-4 bg-white/90 backdrop-blur-lg border-t border-slate-200/80 flex items-center z-40 shadow-lg">
+              <div className="fixed bottom-0 right-0 w-full md:w-[500px] p-3.5 px-4 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 flex items-center gap-2.5 z-40 shadow-lg">
+                {/* Left Button: Contact to Custom App */}
+                <a
+                  href="https://wa.me/6281234567890?text=Halo%20Gilang%20Store,%20saya%20ingin%20custom%20app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-3 px-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs md:text-sm transition-all text-center flex items-center justify-center gap-1.5 border border-slate-200 active:scale-[0.99]"
+                >
+                  <MessageSquare className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span className="truncate">Contact Custom App</span>
+                </a>
+
+                {/* Right Button: Install App */}
                 <a
                   href={`/api/download/${selectedApp.slug}`}
-                  className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-all text-center flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 active:scale-[0.99]"
+                  className="flex-1 py-3 px-2 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs md:text-sm transition-all text-center flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-[0.99]"
                 >
-                  <Download className="w-4.5 h-4.5 stroke-[2.5]" />
-                  <span>Install App</span>
+                  <Download className="w-4 h-4 stroke-[2.5] shrink-0" />
+                  <span className="truncate">Install App</span>
                 </a>
               </div>
             </motion.div>
