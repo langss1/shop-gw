@@ -163,9 +163,6 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
-                <span className="text-sm font-bold text-slate-800 line-clamp-1 max-w-[200px]">
-                  {selectedApp.name}
-                </span>
                 <div className="flex items-center gap-1 text-slate-700">
                   <button className="p-2 hover:bg-slate-100 rounded-full transition-colors active:scale-95">
                     <Share2 className="w-5 h-5 text-slate-600" />

@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gilang Store
 
-## Getting Started
+Storefront aplikasi (Next.js 16 + React 19 + Tailwind 4) dengan backend Supabase dan
+web admin untuk mengelola isinya.
 
-First, run the development server:
+- **Storefront** `/` — daftar app, carousel banner, panel detail, tombol Install.
+- **Admin** `/admin` — CRUD app (termasuk upload ikon, screenshot, dan file rilis) serta CRUD banner.
+- **API publik** `/api/v1/*` — data yang sama, dalam JSON.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Setup
+
+### 1. Environment
+
+Buat `.env.local` di root project:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxxxxxx
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Service role key **tidak dipakai** — semua operasi tulis lewat JWT admin + RLS.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Jalankan `supabase/migrations/0001_init.sql` di Supabase SQL Editor. Isinya:
 
-## Learn More
+| Objek | Keterangan |
+| --- | --- |
+| `profiles` | Role user (`admin` / `viewer`), terisi otomatis lewat trigger saat user baru daftar |
+| `apps` | Data utama app |
+| `app_screenshots`, `app_links` | Relasi milik app |
+| `banners` | Carousel di header storefront |
+| `is_admin()` | Helper yang dipakai semua policy tulis |
+| `increment_download()` | Dipanggil endpoint download |
+| Bucket `app-media`, `app-releases` | Gambar dan file rilis |
 
-To learn more about Next.js, take a look at the following resources:
+RLS: publik hanya bisa membaca app `published` dan banner `is_active`; seluruh operasi
+tulis hanya untuk admin.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Opsional: `supabase/seed.sql` mengisi 3 app dan 2 banner contoh.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Buat user admin
 
-## Deploy on Vercel
+1. Supabase Dashboard → **Authentication** → **Add user** (email + password).
+2. Jalankan di SQL Editor:
+   ```sql
+   update public.profiles set role = 'admin' where email = 'email-anda@contoh.com';
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Jalankan
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+npm run dev
+```
+
+Storefront di <http://localhost:3000>, admin di <http://localhost:3000/admin>.
+
+---
+
+## API publik
+
+| Endpoint | Keterangan |
+| --- | --- |
+| `GET /api/v1/apps` | Semua app published. Filter: `?platform=mobile`, `?category=Cybersecurity` |
+| `GET /api/v1/apps/[slug]` | Detail satu app beserta screenshot dan link |
+| `GET /api/v1/banners` | Banner aktif |
+| `GET /api/download/[slug]` | Menaikkan `download_count`, lalu redirect ke file rilis atau URL eksternal |
+
+---
+
+## Struktur
+
+```
+src/
+  app/
+    page.tsx                  Server Component, fetch app + banner
+    admin/
+      login/                  Halaman login (di luar guard)
+      (protected)/            Semua halaman admin, dijaga layout
+    api/v1/, api/download/    Route handler
+  components/
+    Storefront.tsx            Menyatukan header + grid, memegang state tab
+    MobileHeader.tsx          Carousel banner + tab platform
+    AppStoreGrid.tsx          Kartu app + panel detail
+    admin/                    Form dan komponen admin
+  lib/
+    supabase/                 Client browser & server, config, helper upload
+    actions/                  Server Actions (apps, banners, auth)
+    queries.ts                Query baca untuk storefront
+    constants.ts              Platform, kategori, gradient, helper YouTube
+  proxy.ts                    Refresh session + guard /admin
+```
+
+> Next.js 16 mengganti nama `middleware` menjadi `proxy`, dan `cookies()` / `params` /
+> `searchParams` sekarang hanya bisa diakses secara async.

@@ -1,36 +1,19 @@
-"use client";
-import { useEffect } from "react";
-import Lenis from "lenis";
-import MobileHeader from "@/components/MobileHeader";
-import AppStoreGrid from "@/components/AppStoreGrid";
+import SmoothScroll from "@/components/SmoothScroll";
+import Storefront from "@/components/Storefront";
 import Footer from "@/components/Footer";
+import { getActiveBanners, getPublishedApps } from "@/lib/queries";
 
-export default function Home() {
-  // Initialize Lenis smooth scroll
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-    });
+export const dynamic = "force-dynamic";
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
-  }, []);
+export default async function Home() {
+  const [apps, banners] = await Promise.all([getPublishedApps(), getActiveBanners()]);
 
   return (
-    <main className="min-h-screen flex flex-col bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20 relative">
-      <MobileHeader />
-      
-      <div className="pb-4 flex-1 bg-white">
-        <AppStoreGrid />
-      </div>
-
-      <Footer />
-    </main>
+    <SmoothScroll>
+      <main className="min-h-screen flex flex-col bg-[var(--bg)] selection:bg-blue-100 selection:text-blue-900 max-w-4xl mx-auto border-x border-slate-100 shadow-xl shadow-slate-200/20 relative">
+        <Storefront apps={apps} banners={banners} />
+        <Footer />
+      </main>
+    </SmoothScroll>
   );
 }

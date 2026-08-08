@@ -29,10 +29,6 @@ export default function TermsPage() {
         <div className="bg-white rounded-3xl p-6 md:p-10 border border-slate-200 shadow-sm space-y-8">
           {/* Header Title */}
           <div className="border-b border-slate-100 pb-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold mb-3">
-              <FileText className="w-3.5 h-3.5" />
-              <span>Legal Document</span>
-            </div>
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
               Terms & Conditions
             </h1>
