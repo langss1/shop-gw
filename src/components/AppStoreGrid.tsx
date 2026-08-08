@@ -135,38 +135,39 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                     key={app.id}
-                    className="group bg-white rounded-3xl overflow-hidden flex flex-col shadow-sm border border-slate-200 transition-all hover:shadow-lg w-full"
+                    className="group bg-white rounded-[28px] overflow-hidden flex flex-col border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_rgba(37,99,235,0.12)] hover:border-blue-300 transition-all duration-300 w-full"
                   >
-                    {/* Top Cover — video YouTube, atau gradient kalau belum diisi */}
-                    <div className="w-full relative pt-[56.25%] bg-black">
+                    {/* Top Cover — Video Preview / Gradient */}
+                    <div className="w-full relative aspect-video bg-slate-950 overflow-hidden">
                       {embedUrl ? (
                         <iframe
-                          className="absolute top-0 left-0 w-full h-full"
+                          className="absolute top-0 left-0 w-full h-full border-0"
                           src={embedUrl}
                           title={`${app.name} preview`}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                           allowFullScreen
-                        ></iframe>
+                        />
                       ) : (
                         <div
                           className={`absolute top-0 left-0 w-full h-full bg-gradient-to-br ${app.gradient} flex items-center justify-center`}
                         >
-                          <span className="text-white/90 text-4xl font-bold drop-shadow">
+                          <span className="text-white/90 text-4xl font-extrabold drop-shadow-md">
                             {app.name.charAt(0)}
                           </span>
                         </div>
                       )}
                     </div>
 
-                    {/* App Details */}
-                    <div className="p-4 md:p-6 flex items-center justify-between bg-white text-slate-900 relative z-20">
+                    {/* App Card Content Body */}
+                    <div className="p-5 flex flex-col justify-between flex-1 bg-white text-slate-900 relative z-20 gap-4">
+                      {/* Main Info Row (Clickable) */}
                       <div
-                        className="flex items-center gap-4 flex-1 cursor-pointer"
+                        className="flex items-start gap-4 cursor-pointer"
                         onClick={() => setSelectedApp(app)}
                       >
-                        {/* Icon */}
+                        {/* App Icon */}
                         <div
-                          className={`w-14 h-14 bg-gradient-to-br ${app.gradient} border border-slate-100 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-sm shrink-0 overflow-hidden`}
+                          className={`w-16 h-16 bg-gradient-to-br ${app.gradient} border border-slate-100 rounded-[20px] flex items-center justify-center font-black text-2xl shadow-md shrink-0 overflow-hidden ring-4 ring-slate-50 group-hover:scale-105 transition-transform duration-300`}
                         >
                           {app.icon_url ? (
                             /* eslint-disable-next-line @next/next/no-img-element */
@@ -182,26 +183,37 @@ export default function AppStoreGrid({ apps }: { apps: AppWithRelations[] }) {
                           )}
                         </div>
 
-                        {/* Info */}
-                        <div className="flex flex-col min-w-0">
-                          <h4 className="text-base md:text-lg font-extrabold text-slate-900 line-clamp-1 leading-tight">
+                        {/* Text Container */}
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="inline-self-start px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-blue-50 text-blue-600 w-fit mb-1 border border-blue-100/60">
+                            {app.category}
+                          </span>
+                          <h4 className="text-lg font-black text-slate-900 tracking-tight leading-snug group-hover:text-blue-600 transition-colors line-clamp-1">
                             {app.name}
                           </h4>
-                          <p className="text-xs md:text-sm text-slate-500 font-medium mt-0.5 line-clamp-2 leading-snug">
+                          <p className="text-xs text-slate-500 font-medium mt-0.5 line-clamp-2 leading-relaxed">
                             {app.tagline || app.description}
                           </p>
                         </div>
                       </div>
 
-                      {/* Download Button */}
-                      <button
-                        type="button"
-                        onClick={() => setPendingDownloadApp(app)}
-                        className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors shrink-0 ml-2"
-                        aria-label={`Download ${app.name}`}
-                      >
-                        <Download className="w-5 h-5 text-slate-700" strokeWidth={2.5} />
-                      </button>
+                      {/* Card Footer Row */}
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-xs font-extrabold text-slate-400">
+                          <span>{app.download_count > 0 ? `${app.download_count}+ downloads` : "1K+ downloads"}</span>
+                        </div>
+
+                        {/* Download CTA Button */}
+                        <button
+                          type="button"
+                          onClick={() => setPendingDownloadApp(app)}
+                          className="px-4 py-2 rounded-full bg-slate-900 hover:bg-blue-600 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-md hover:shadow-blue-500/25 transition-all active:scale-95 shrink-0"
+                          aria-label={`Download ${app.name}`}
+                        >
+                          <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+                          <span>Get</span>
+                        </button>
+                      </div>
                     </div>
                   </motion.div>
                 );
